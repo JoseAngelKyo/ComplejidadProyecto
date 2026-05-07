@@ -1,20 +1,56 @@
 import csv
 import random
+import os
 
-# =========================================
-# CONFIGURACIÓN GENERAL
-# =========================================
+# ==========================================
+# CREAR CARPETA DATASET
+# ==========================================
 
-NUM_NODOS = 1500
-NUM_CALLES = 5000
+CARPETA_DATASET = "DataSet"
 
-ZONAS = ["Centro", "Norte", "Sur", "Este", "Oeste"]
+os.makedirs(CARPETA_DATASET, exist_ok=True)
 
-TIPOS_NODO = [
-    "interseccion",
-    "rotonda",
-    "cruce"
+# ==========================================
+# CONFIGURACIÓN
+# ==========================================
+
+NUM_REGISTROS = 5000
+
+DISTRITOS = [
+    "Miraflores",
+    "San Isidro",
+    "Barranco",
+    "Surco",
+    "La Molina",
+    "Ate",
+    "San Borja",
+    "Chorrillos",
+    "Comas",
+    "Los Olivos",
+    "San Miguel",
+    "Callao",
+    "Villa El Salvador",
+    "Rimac",
+    "San Juan de Lurigancho"
 ]
+
+ZONAS = {
+    "Miraflores": "Lima Sur",
+    "San Isidro": "Lima Centro",
+    "Barranco": "Lima Sur",
+    "Surco": "Lima Sur",
+    "La Molina": "Lima Este",
+    "Ate": "Lima Este",
+    "San Borja": "Lima Centro",
+    "Chorrillos": "Lima Sur",
+    "Comas": "Lima Norte",
+    "Los Olivos": "Lima Norte",
+    "San Miguel": "Lima Oeste",
+    "Callao": "Lima Oeste",
+    "Villa El Salvador": "Lima Sur",
+    "Rimac": "Lima Centro",
+    "San Juan de Lurigancho": "Lima Este"
+}
 
 TIPOS_VIA = [
     "calle",
@@ -22,31 +58,59 @@ TIPOS_VIA = [
     "autopista"
 ]
 
-ESTADOS_VIA = [
-    "libre",
-    "congestionada",
-    "cerrada"
+TRAFICOS = [
+    "trafico libre",
+    "trafico moderado",
+    "trafico alto",
+    "trafico extremo"
 ]
 
 PRIORIDADES = [
-    "alta",
+    "baja",
     "media",
-    "baja"
+    "alta"
 ]
 
-# =========================================
-# GENERAR nodos.csv
-# =========================================
+VELOCIDADES = [
+    "30 km/h",
+    "40 km/h",
+    "50 km/h",
+    "60 km/h",
+    "80 km/h",
+    "100 km/h"
+]
+
+CAPACIDADES = [
+    "40 vehiculos",
+    "60 vehiculos",
+    "100 vehiculos",
+    "150 vehiculos",
+    "250 vehiculos",
+    "500 vehiculos"
+]
+
+# ==========================================
+# RUTA DEL ARCHIVO CSV
+# ==========================================
+
+RUTA_ARCHIVO = os.path.join(
+    CARPETA_DATASET,
+    "trafico_vial_lima.csv"
+)
+
+# ==========================================
+# GENERAR CSV
+# ==========================================
 
 with open(
-    "nodos.csv",
+    RUTA_ARCHIVO,
     mode="w",
     newline="",
     encoding="utf-8"
-) as archivo_nodos:
+) as archivo:
 
     writer = csv.writer(
-        archivo_nodos,
+        archivo,
         delimiter=",",
         quotechar='"',
         quoting=csv.QUOTE_ALL
@@ -54,144 +118,68 @@ with open(
 
     # CABECERA
     writer.writerow([
-        "id_nodo",
-        "nombre",
-        "zona",
-        "tipo_nodo",
-        "latitud",
-        "longitud",
-        "semaforo"
-    ])
-
-    # DATOS
-    for i in range(1, NUM_NODOS + 1):
-
-        id_nodo = f"N{i}"
-
-        nombre = f"Interseccion_{i}"
-
-        zona = random.choice(ZONAS)
-
-        tipo_nodo = random.choice(TIPOS_NODO)
-
-        latitud = round(random.uniform(-12.20, -11.90), 6)
-
-        longitud = round(random.uniform(-77.20, -76.90), 6)
-
-        semaforo = random.randint(0, 1)
-
-        writer.writerow([
-            id_nodo,
-            nombre,
-            zona,
-            tipo_nodo,
-            latitud,
-            longitud,
-            semaforo
-        ])
-
-# =========================================
-# GENERAR calles.csv
-# =========================================
-
-with open(
-    "calles.csv",
-    mode="w",
-    newline="",
-    encoding="utf-8"
-) as archivo_calles:
-
-    writer = csv.writer(
-        archivo_calles,
-        delimiter=",",
-        quotechar='"',
-        quoting=csv.QUOTE_ALL
-    )
-
-    # CABECERA
-    writer.writerow([
-        "id_calle",
         "origen",
         "destino",
+        "zona_origen",
+        "zona_destino",
+        "tipo_via",
         "distancia_km",
         "tiempo_min",
         "trafico",
-        "capacidad_vehiculos",
-        "flujo_actual",
-        "velocidad_max_kmh",
-        "tipo_via",
-        "zona",
-        "estado_via",
+        "capacidad",
+        "velocidad_max",
+        "prioridad_via",
         "semaforo",
-        "bidireccional",
-        "prioridad"
+        "bidireccional"
     ])
 
-    # DATOS
-    for i in range(1, NUM_CALLES + 1):
+    # GENERAR DATOS
+    for _ in range(NUM_REGISTROS):
 
-        origen = f"N{random.randint(1, NUM_NODOS)}"
+        origen = random.choice(DISTRITOS)
 
-        destino = f"N{random.randint(1, NUM_NODOS)}"
+        destino = random.choice(DISTRITOS)
 
         while destino == origen:
-            destino = f"N{random.randint(1, NUM_NODOS)}"
+            destino = random.choice(DISTRITOS)
 
-        distancia_km = round(random.uniform(0.3, 10.0), 2)
+        zona_origen = ZONAS[origen]
 
-        tiempo_min = round(
-            distancia_km * random.uniform(2, 6),
-            2
-        )
-
-        trafico = round(random.uniform(0.0, 1.0), 2)
-
-        capacidad_vehiculos = random.randint(50, 500)
-
-        flujo_actual = random.randint(
-            0,
-            capacidad_vehiculos
-        )
-
-        velocidad_max_kmh = random.choice([
-            30,
-            40,
-            50,
-            60,
-            80,
-            100
-        ])
+        zona_destino = ZONAS[destino]
 
         tipo_via = random.choice(TIPOS_VIA)
 
-        zona = random.choice(ZONAS)
+        distancia_km = f"{random.randint(1, 15)} km"
 
-        estado_via = random.choice(ESTADOS_VIA)
+        tiempo_min = f"{random.randint(3, 60)} min"
+
+        trafico = random.choice(TRAFICOS)
+
+        capacidad = random.choice(CAPACIDADES)
+
+        velocidad_max = random.choice(VELOCIDADES)
+
+        prioridad_via = random.choice(PRIORIDADES)
 
         semaforo = random.randint(0, 1)
 
         bidireccional = random.randint(0, 1)
 
-        prioridad = random.choice(PRIORIDADES)
-
         writer.writerow([
-            i,
             origen,
             destino,
+            zona_origen,
+            zona_destino,
+            tipo_via,
             distancia_km,
             tiempo_min,
             trafico,
-            capacidad_vehiculos,
-            flujo_actual,
-            velocidad_max_kmh,
-            tipo_via,
-            zona,
-            estado_via,
+            capacidad,
+            velocidad_max,
+            prioridad_via,
             semaforo,
-            bidireccional,
-            prioridad
+            bidireccional
         ])
 
-print("\nCSV generados correctamente.")
-print("-> nodos.csv")
-print("-> calles.csv")
+print("\nDataset generado correctamente.")
+print(f"Archivo creado en: {RUTA_ARCHIVO}")
