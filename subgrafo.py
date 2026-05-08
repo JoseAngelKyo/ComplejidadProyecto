@@ -3,25 +3,14 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import os
 
-# =========================================================
-# CARPETA DATASET
-# =========================================================
 
 CARPETA_DATASET = "DataSet"
-
-# =========================================================
-# CARGA DE DATOS (SIMULACION)
-# =========================================================
 
 df_nodos = pd.read_csv(os.path.join(
     CARPETA_DATASET, "intersecciones_viales.csv"))
 
 df_edges = pd.read_csv(os.path.join(
     CARPETA_DATASET, "conexiones_viales_trafico.csv"))
-
-# =========================================================
-# MENU DE ZONAS
-# =========================================================
 
 print("\n===================================")
 print("        ANALISIS DE SUBGRAFOS      ")
@@ -43,10 +32,6 @@ zonas_map = {
 
 zonas_seleccionadas = zonas_map.get(opcion, ["Lima Centro"])
 
-# =========================================================
-# DESCRIPCIÓN
-# =========================================================
-
 descripcion_zona = {
     "Lima Norte": "Zona de expansión urbana con alta conectividad residencial e industrial.",
     "Lima Centro": "Zona con mayor densidad de intersecciones y flujo vehicular intenso.",
@@ -59,10 +44,6 @@ print("===================================")
 
 for zona in zonas_seleccionadas:
     print(f"- {zona}: {descripcion_zona[zona]}")
-
-# =========================================================
-# FILTRADO DEL GRAFO
-# =========================================================
 
 df_nodos_filtrados = df_nodos[df_nodos["zona"].isin(zonas_seleccionadas)]
 nodos_validos = df_nodos_filtrados["nombre"].tolist()
@@ -79,10 +60,6 @@ G = nx.from_pandas_edgelist(
     create_using=nx.Graph()
 )
 
-# =========================================================
-# ANALISIS
-# =========================================================
-
 print("\n===================================")
 print("ANÁLISIS DEL SUBGRAFO")
 print("===================================")
@@ -96,10 +73,6 @@ if len(G.nodes) > 0:
     print(
         f"Nodo más conectado: {nodo_central} ({grados[nodo_central]} conexiones)")
 
-# =========================================================
-# VISUALIZACIÓN
-# =========================================================
-
 plt.figure(figsize=(10, 7))
 pos = nx.spring_layout(G, seed=42)
 
@@ -109,4 +82,3 @@ nx.draw_networkx_edges(G, pos, alpha=0.4)
 plt.title(f"Subgrafo Vial - {', '.join(zonas_seleccionadas)}")
 plt.axis("off")
 plt.show()
-2

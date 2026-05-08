@@ -1,7 +1,6 @@
 import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
-import simulacion
 
 df_intersecciones = pd.read_csv(
     "DataSet/intersecciones_viales.csv"
