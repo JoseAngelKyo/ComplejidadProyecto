@@ -2,24 +2,12 @@ import csv
 import random
 import os
 
-# =========================================================
-# CREAR CARPETA DATASET
-# =========================================================
-
 CARPETA_DATASET = "DataSet"
 
 os.makedirs(CARPETA_DATASET, exist_ok=True)
 
-# =========================================================
-# CONFIGURACIÓN GENERAL
-# =========================================================
-
 NUM_INTERSECCIONES = 1500
 NUM_CONEXIONES = 1500
-
-# =========================================================
-# DISTRITOS
-# =========================================================
 
 DISTRITOS = [
     "Miraflores",
@@ -39,10 +27,6 @@ DISTRITOS = [
     "San Juan de Lurigancho"
 ]
 
-# =========================================================
-# ZONAS
-# =========================================================
-
 ZONAS = {
     "Miraflores": "Lima Sur",
     "San Isidro": "Lima Centro",
@@ -60,10 +44,6 @@ ZONAS = {
     "Rimac": "Lima Centro",
     "San Juan de Lurigancho": "Lima Este"
 }
-
-# =========================================================
-# CONEXIONES CERCANAS
-# =========================================================
 
 DISTRITOS_CERCANOS = {
     "Miraflores": ["Barranco", "San Isidro", "Surco"],
@@ -83,19 +63,11 @@ DISTRITOS_CERCANOS = {
     "San Juan de Lurigancho": ["Ate", "Rimac"]
 }
 
-# =========================================================
-# TIPOS DE INTERSECCIÓN
-# =========================================================
-
 TIPOS_INTERSECCION = [
     "cruce",
     "rotonda",
     "interseccion principal"
 ]
-
-# =========================================================
-# TIPOS DE VÍA
-# =========================================================
 
 TIPOS_VIA = [
     "calle",
@@ -103,19 +75,11 @@ TIPOS_VIA = [
     "autopista"
 ]
 
-# =========================================================
-# PRIORIDAD DE VÍA
-# =========================================================
-
 PRIORIDADES = [
     "baja",
     "media",
     "alta"
 ]
-
-# =========================================================
-# ARCHIVOS CSV
-# =========================================================
 
 RUTA_INTERSECCIONES = os.path.join(
     CARPETA_DATASET,
@@ -126,10 +90,6 @@ RUTA_CONEXIONES = os.path.join(
     CARPETA_DATASET,
     "conexiones_viales_trafico.csv"
 )
-
-# =========================================================
-# GENERAR INTERSECCIONES
-# =========================================================
 
 intersecciones_generadas = []
 
@@ -190,10 +150,6 @@ with open(
             "distrito": distrito
         })
 
-# =========================================================
-# GENERAR CONEXIONES
-# =========================================================
-
 with open(
     RUTA_CONEXIONES,
     mode="w",
@@ -244,10 +200,6 @@ with open(
         destino = destino_data["nombre"]
 
         tipo_via = random.choice(TIPOS_VIA)
-
-        # =====================================================
-        # DISTANCIA Y VELOCIDAD SEGÚN TIPO DE VÍA
-        # =====================================================
 
         if tipo_via == "calle":
             distancia = random.randint(1, 5)

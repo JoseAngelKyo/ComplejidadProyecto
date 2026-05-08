@@ -3,21 +3,30 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import os
 
-CARPETA_DATASET = "DataSet"
-CARPETA_SUBGRAFOS = "DataSet_Subgrafo"
+# =========================================================
+# CARPETA DATASET
+# =========================================================
 
-os.makedirs(CARPETA_SUBGRAFOS, exist_ok=True)
+CARPETA_DATASET = "DataSet"
+
+# =========================================================
+# CARGA DE DATOS (SIMULACION)
+# =========================================================
 
 df_nodos = pd.read_csv(os.path.join(
     CARPETA_DATASET, "intersecciones_viales.csv"))
+
 df_edges = pd.read_csv(os.path.join(
     CARPETA_DATASET, "conexiones_viales_trafico.csv"))
+
+# =========================================================
+# MENU DE ZONAS
+# =========================================================
 
 print("\n===================================")
 print("        ANALISIS DE SUBGRAFOS      ")
 print("===================================")
 
-print("Selecciona una zona:")
 print("1. Lima Norte")
 print("2. Lima Centro")
 print("3. Lima Sur")
@@ -34,10 +43,14 @@ zonas_map = {
 
 zonas_seleccionadas = zonas_map.get(opcion, ["Lima Centro"])
 
+# =========================================================
+# DESCRIPCIÓN
+# =========================================================
+
 descripcion_zona = {
-    "Lima Norte": "Zona de alta expansión urbana con conectividad industrial y residencial.",
-    "Lima Centro": "Núcleo principal de la ciudad con alta densidad de tráfico e intersecciones.",
-    "Lima Sur": "Zona residencial y comercial con flujo medio de movilidad urbana."
+    "Lima Norte": "Zona de expansión urbana con alta conectividad residencial e industrial.",
+    "Lima Centro": "Zona con mayor densidad de intersecciones y flujo vehicular intenso.",
+    "Lima Sur": "Zona residencial-comercial con flujo medio de tráfico."
 }
 
 print("\n===================================")
@@ -45,7 +58,11 @@ print("DESCRIPCIÓN DEL SUBGRAFO")
 print("===================================")
 
 for zona in zonas_seleccionadas:
-    print(f"- {zona}: {descripcion_zona.get(zona, 'Zona urbana de análisis')}")
+    print(f"- {zona}: {descripcion_zona[zona]}")
+
+# =========================================================
+# FILTRADO DEL GRAFO
+# =========================================================
 
 df_nodos_filtrados = df_nodos[df_nodos["zona"].isin(zonas_seleccionadas)]
 nodos_validos = df_nodos_filtrados["nombre"].tolist()
@@ -62,6 +79,10 @@ G = nx.from_pandas_edgelist(
     create_using=nx.Graph()
 )
 
+# =========================================================
+# ANALISIS
+# =========================================================
+
 print("\n===================================")
 print("ANÁLISIS DEL SUBGRAFO")
 print("===================================")
@@ -75,25 +96,17 @@ if len(G.nodes) > 0:
     print(
         f"Nodo más conectado: {nodo_central} ({grados[nodo_central]} conexiones)")
 
-plt.figure(figsize=(10, 7))
+# =========================================================
+# VISUALIZACIÓN
+# =========================================================
 
+plt.figure(figsize=(10, 7))
 pos = nx.spring_layout(G, seed=42)
 
 nx.draw_networkx_nodes(G, pos, node_size=30, node_color="skyblue")
 nx.draw_networkx_edges(G, pos, alpha=0.4)
 
-plt.title(f"Subgrafo Vial - {', '.join(zonas_seleccionadas)}", fontsize=14)
+plt.title(f"Subgrafo Vial - {', '.join(zonas_seleccionadas)}")
 plt.axis("off")
-
 plt.show()
-
-archivo_salida = os.path.join(
-    CARPETA_SUBGRAFOS,
-    "subgrafo_seleccionado.csv"
-)
-
-df_sub = pd.DataFrame(list(G.edges()), columns=["origen", "destino"])
-df_sub.to_csv(archivo_salida, index=False)
-
-print("\n✔ Subgrafo guardado en:")
-print(archivo_salida)
+2
