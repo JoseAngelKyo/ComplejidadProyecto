@@ -2,15 +2,7 @@ import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
 
-# =========================================================
-# IMPORTAR SIMULACIÓN
-# =========================================================
-
 import simulacion
-
-# =========================================================
-# CARGAR DATASETS
-# =========================================================
 
 df_intersecciones = pd.read_csv(
     "DataSet/intersecciones_viales.csv"
@@ -20,20 +12,12 @@ df_conexiones = pd.read_csv(
     "DataSet/conexiones_viales_trafico.csv"
 )
 
-# =========================================================
-# CREAR GRAFO
-# =========================================================
-
 G = nx.from_pandas_edgelist(
     df_conexiones,
     source="origen",
     target="destino",
     create_using=nx.Graph()
 )
-
-# =========================================================
-# VISUALIZAR GRAFO
-# =========================================================
 
 plt.figure(figsize=(14, 10))
 
@@ -63,10 +47,6 @@ plt.title(
 plt.axis("off")
 
 plt.show()
-
-# =========================================================
-# INFORMACIÓN FINAL
-# =========================================================
 
 print("\n=========================================")
 print("ANALISIS DEL GRAFO")
