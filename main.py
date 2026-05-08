@@ -1,20 +1,17 @@
+
 import csv
 import random
 import os
+import pandas as pd
+import networkx as nx
+import matplotlib.pyplot as plt
 
-# ==========================================
-# CREAR CARPETA DATASET
-# ==========================================
 
 CARPETA_DATASET = "DataSet"
-
 os.makedirs(CARPETA_DATASET, exist_ok=True)
 
-# ==========================================
-# CONFIGURACIÓN
-# ==========================================
-
-NUM_REGISTROS = 5000
+NUM_INTERSECCIONES = 1500
+NUM_CONEXIONES = 1500
 
 DISTRITOS = [
     "Miraflores",
@@ -51,6 +48,12 @@ ZONAS = {
     "Rimac": "Lima Centro",
     "San Juan de Lurigancho": "Lima Este"
 }
+
+TIPOS_INTERSECCION = [
+    "cruce",
+    "rotonda",
+    "interseccion principal"
+]
 
 TIPOS_VIA = [
     "calle",
@@ -89,39 +92,87 @@ CAPACIDADES = [
     "500 vehiculos"
 ]
 
-# ==========================================
-# RUTA DEL ARCHIVO CSV
-# ==========================================
-
-RUTA_ARCHIVO = os.path.join(
+RUTA_INTERSECCIONES = os.path.join(
     CARPETA_DATASET,
-    "trafico_vial_lima.csv"
+    "intersecciones_viales.csv"
 )
 
-# ==========================================
-# GENERAR CSV
-# ==========================================
+RUTA_CONEXIONES = os.path.join(
+    CARPETA_DATASET,
+    "conexiones_viales_trafico.csv"
+)
+
+intersecciones_generadas = []
 
 with open(
-    RUTA_ARCHIVO,
+    RUTA_INTERSECCIONES,
     mode="w",
     newline="",
     encoding="utf-8"
-) as archivo:
+) as archivo_intersecciones:
 
     writer = csv.writer(
-        archivo,
+        archivo_intersecciones,
         delimiter=",",
         quotechar='"',
         quoting=csv.QUOTE_ALL
     )
 
-    # CABECERA
+    writer.writerow([
+        "id_interseccion",
+        "nombre",
+        "zona",
+        "latitud",
+        "longitud",
+        "tipo_interseccion",
+        "semaforo"
+    ])
+
+    for i in range(1, NUM_INTERSECCIONES + 1):
+
+        distrito = random.choice(DISTRITOS)
+
+        nombre = f"{distrito}_{i}"
+
+        zona = ZONAS[distrito]
+
+        latitud = round(random.uniform(-12.25, -11.85), 6)
+
+        longitud = round(random.uniform(-77.20, -76.85), 6)
+
+        tipo_interseccion = random.choice(TIPOS_INTERSECCION)
+
+        semaforo = random.randint(0, 1)
+
+        writer.writerow([
+            i,
+            nombre,
+            zona,
+            latitud,
+            longitud,
+            tipo_interseccion,
+            semaforo
+        ])
+
+        intersecciones_generadas.append(nombre)
+
+with open(
+    RUTA_CONEXIONES,
+    mode="w",
+    newline="",
+    encoding="utf-8"
+) as archivo_conexiones:
+
+    writer = csv.writer(
+        archivo_conexiones,
+        delimiter=",",
+        quotechar='"',
+        quoting=csv.QUOTE_ALL
+    )
+
     writer.writerow([
         "origen",
         "destino",
-        "zona_origen",
-        "zona_destino",
         "tipo_via",
         "distancia_km",
         "tiempo_min",
@@ -129,23 +180,17 @@ with open(
         "capacidad",
         "velocidad_max",
         "prioridad_via",
-        "semaforo",
         "bidireccional"
     ])
 
-    # GENERAR DATOS
-    for _ in range(NUM_REGISTROS):
+    for _ in range(NUM_CONEXIONES):
 
-        origen = random.choice(DISTRITOS)
+        origen = random.choice(intersecciones_generadas)
 
-        destino = random.choice(DISTRITOS)
+        destino = random.choice(intersecciones_generadas)
 
         while destino == origen:
-            destino = random.choice(DISTRITOS)
-
-        zona_origen = ZONAS[origen]
-
-        zona_destino = ZONAS[destino]
+            destino = random.choice(intersecciones_generadas)
 
         tipo_via = random.choice(TIPOS_VIA)
 
@@ -161,15 +206,11 @@ with open(
 
         prioridad_via = random.choice(PRIORIDADES)
 
-        semaforo = random.randint(0, 1)
-
         bidireccional = random.randint(0, 1)
 
         writer.writerow([
             origen,
             destino,
-            zona_origen,
-            zona_destino,
             tipo_via,
             distancia_km,
             tiempo_min,
@@ -177,9 +218,50 @@ with open(
             capacidad,
             velocidad_max,
             prioridad_via,
-            semaforo,
             bidireccional
         ])
 
-print("\nDataset generado correctamente.")
-print(f"Archivo creado en: {RUTA_ARCHIVO}")
+df_intersecciones = pd.read_csv(RUTA_INTERSECCIONES)
+
+df_conexiones = pd.read_csv(RUTA_CONEXIONES)
+
+G = nx.from_pandas_edgelist(
+    df_conexiones,
+    source="origen",
+    target="destino",
+    create_using=nx.Graph()
+)
+
+plt.figure(figsize=(12, 8))
+
+pos = nx.spring_layout(G, seed=42)
+
+nx.draw(
+    G,
+    pos,
+    node_size=10,
+    with_labels=False
+)
+
+plt.title("Red Vial Inteligente - Grafo de Intersecciones")
+plt.show()
+
+print("\n=========================================")
+print("DATASET GENERADO CORRECTAMENTE")
+print("=========================================")
+
+print(f"\nIntersecciones creadas (Nodos): {NUM_INTERSECCIONES}")
+print(f"Archivo generado: {RUTA_INTERSECCIONES}")
+
+print(f"\nConexiones creadas (Aristas): {NUM_CONEXIONES}")
+print(f"Archivo generado: {RUTA_CONEXIONES}")
+
+print(f"\nCantidad total de nodos en el grafo: {G.number_of_nodes()}")
+print(f"Cantidad total de aristas en el grafo: {G.number_of_edges()}")
+
+print("\nUbicacion de los archivos:")
+print(f"./{CARPETA_DATASET}/")
+
+print("\n=========================================")
+print("Proceso finalizado correctamente.")
+print("=========================================")
