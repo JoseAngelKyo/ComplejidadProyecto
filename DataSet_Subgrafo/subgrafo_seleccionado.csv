@@ -1,383 +1,169 @@
 origen,destino
-Chorrillos_22,Barranco_689
-Chorrillos_22,Barranco_1160
-Barranco_689,Miraflores_67
-Miraflores_1054,Barranco_1091
-Miraflores_1054,Barranco_532
-Barranco_1091,Surco_1169
-Barranco_1091,Miraflores_437
-Chorrillos_1485,Villa El Salvador_1500
-Chorrillos_1485,Villa El Salvador_165
-Chorrillos_1485,Barranco_61
-Chorrillos_1485,Villa El Salvador_1412
-Villa El Salvador_1500,Chorrillos_1418
-Chorrillos_671,Barranco_768
-Chorrillos_671,Barranco_41
-Chorrillos_671,Barranco_208
-Chorrillos_671,Villa El Salvador_585
-Barranco_768,Miraflores_394
-Barranco_768,Chorrillos_1041
-Villa El Salvador_1183,Chorrillos_1289
-Villa El Salvador_1183,Chorrillos_1100
-Villa El Salvador_1183,Chorrillos_584
-Chorrillos_1289,Villa El Salvador_1355
-Surco_995,Barranco_61
-Surco_995,Villa El Salvador_834
-Surco_995,Villa El Salvador_1392
-Surco_995,Barranco_704
-Barranco_61,Miraflores_950
-Barranco_61,Surco_1260
-Barranco_61,Surco_1336
-Barranco_61,Miraflores_1315
-Barranco_61,Chorrillos_1100
-Barranco_61,Surco_92
-Surco_951,Barranco_1366
-Surco_951,Villa El Salvador_1442
-Barranco_1366,Surco_1007
-Barranco_1366,Miraflores_725
-Miraflores_26,Surco_1215
-Miraflores_26,Barranco_219
-Miraflores_26,Barranco_1281
-Barranco_41,Chorrillos_1300
-Barranco_41,Chorrillos_917
-Barranco_41,Chorrillos_1235
-Chorrillos_1300,Barranco_1181
-Villa El Salvador_719,Surco_350
-Surco_350,Barranco_292
-Surco_350,Miraflores_395
-Surco_350,Miraflores_1180
-Surco_350,Barranco_1104
-Villa El Salvador_1433,Chorrillos_1233
-Chorrillos_1233,Villa El Salvador_1412
-Chorrillos_601,Barranco_1072
-Chorrillos_601,Villa El Salvador_1412
-Chorrillos_601,Villa El Salvador_1462
-Villa El Salvador_834,Surco_250
-Villa El Salvador_834,Chorrillos_662
-Villa El Salvador_834,Surco_1385
-Barranco_554,Miraflores_506
-Miraflores_506,Barranco_1281
-Chorrillos_1052,Barranco_1287
-Chorrillos_1052,Barranco_331
-Chorrillos_1052,Villa El Salvador_1442
-Chorrillos_1052,Villa El Salvador_330
-Barranco_1287,Surco_693
-Barranco_1287,Miraflores_1222
-Barranco_638,Surco_325
-Barranco_638,Chorrillos_535
-Barranco_638,Surco_729
-Surco_325,Miraflores_107
-Surco_495,Barranco_655
-Chorrillos_1235,Villa El Salvador_85
-Chorrillos_1235,Villa El Salvador_851
-Villa El Salvador_85,Chorrillos_781
-Villa El Salvador_85,Surco_1321
-Villa El Salvador_124,Chorrillos_1018
-Chorrillos_1018,Villa El Salvador_1148
-Miraflores_1298,Barranco_704
-Miraflores_1298,Surco_1066
-Barranco_704,Surco_45
-Miraflores_67,Barranco_1229
-Barranco_461,Surco_909
-Barranco_461,Miraflores_1301
-Barranco_461,Chorrillos_662
-Barranco_461,Chorrillos_204
-Villa El Salvador_210,Chorrillos_1028
-Villa El Salvador_210,Chorrillos_904
-Villa El Salvador_210,Chorrillos_1283
-Villa El Salvador_210,Surco_323
-Chorrillos_1100,Villa El Salvador_165
-Chorrillos_1100,Barranco_440
-Chorrillos_1100,Villa El Salvador_854
-Surco_1007,Villa El Salvador_189
-Chorrillos_1466,Barranco_942
-Barranco_942,Miraflores_1239
-Villa El Salvador_165,Surco_1362
-Miraflores_243,Barranco_105
-Miraflores_243,Barranco_1125
-Barranco_105,Miraflores_196
-Surco_1260,Miraflores_771
-Surco_1260,Barranco_1199
-Barranco_208,Miraflores_77
-Barranco_208,Miraflores_1208
-Miraflores_77,Barranco_393
-Miraflores_77,Barranco_57
-Villa El Salvador_423,Surco_27
-Villa El Salvador_423,Chorrillos_620
-Villa El Salvador_423,Chorrillos_439
-Villa El Salvador_423,Surco_302
-Villa El Salvador_423,Surco_1460
-Villa El Salvador_423,Chorrillos_794
-Villa El Salvador_423,Chorrillos_1331
-Barranco_610,Surco_1364
-Barranco_610,Surco_313
-Surco_1364,Villa El Salvador_1214
-Chorrillos_95,Barranco_459
-Chorrillos_95,Villa El Salvador_925
-Chorrillos_95,Barranco_836
-Barranco_459,Miraflores_356
-Barranco_459,Miraflores_972
-Chorrillos_781,Villa El Salvador_777
-Chorrillos_781,Villa El Salvador_585
-Villa El Salvador_822,Surco_513
-Surco_513,Barranco_717
-Surco_513,Villa El Salvador_1462
-Miraflores_176,Barranco_331
-Miraflores_176,Barranco_774
-Villa El Salvador_624,Chorrillos_1017
-Villa El Salvador_624,Chorrillos_533
-Villa El Salvador_624,Surco_285
-Chorrillos_1017,Villa El Salvador_147
-Chorrillos_1017,Barranco_23
-Villa El Salvador_1214,Chorrillos_769
-Villa El Salvador_1214,Chorrillos_318
-Miraflores_455,Surco_1371
-Miraflores_455,Surco_898
-Barranco_676,Surco_1362
-Barranco_676,Miraflores_1294
-Surco_1362,Villa El Salvador_156
-Surco_1362,Villa El Salvador_1064
-Surco_250,Barranco_466
-Chorrillos_1243,Villa El Salvador_732
-Chorrillos_1243,Barranco_717
-Chorrillos_1243,Villa El Salvador_267
-Chorrillos_1243,Villa El Salvador_608
-Villa El Salvador_732,Surco_1385
-Barranco_393,Miraflores_1255
-Barranco_393,Miraflores_916
-Miraflores_4,Surco_428
-Villa El Salvador_1112,Chorrillos_58
-Villa El Salvador_1112,Surco_468
-Chorrillos_58,Barranco_935
-Barranco_79,Miraflores_1023
-Villa El Salvador_1124,Chorrillos_596
-Villa El Salvador_1124,Chorrillos_311
-Chorrillos_596,Barranco_17
-Chorrillos_1218,Villa El Salvador_652
-Chorrillos_1218,Barranco_1360
-Barranco_1173,Chorrillos_809
-Barranco_1173,Chorrillos_271
-Barranco_1173,Chorrillos_1067
-Barranco_1173,Chorrillos_142
-Chorrillos_809,Barranco_527
-Chorrillos_809,Villa El Salvador_543
-Chorrillos_809,Villa El Salvador_1290
-Miraflores_341,Surco_270
-Miraflores_478,Surco_627
-Surco_627,Villa El Salvador_135
-Surco_973,Barranco_57
-Barranco_57,Chorrillos_194
-Barranco_57,Chorrillos_769
-Miraflores_394,Surco_1444
-Surco_1444,Villa El Salvador_13
-Chorrillos_1258,Barranco_1199
-Chorrillos_1258,Villa El Salvador_932
-Chorrillos_1258,Villa El Salvador_1392
-Barranco_1199,Miraflores_316
-Miraflores_771,Barranco_1229
-Chorrillos_194,Villa El Salvador_73
-Villa El Salvador_1046,Chorrillos_789
-Barranco_186,Miraflores_860
-Barranco_186,Surco_1378
-Miraflores_860,Barranco_1281
-Miraflores_707,Surco_894
-Miraflores_707,Barranco_1432
-Surco_894,Miraflores_848
-Surco_894,Miraflores_842
-Chorrillos_1495,Barranco_1432
-Chorrillos_1495,Villa El Salvador_642
-Barranco_453,Miraflores_906
-Barranco_453,Miraflores_916
-Barranco_453,Chorrillos_1079
-Miraflores_395,Barranco_1104
-Barranco_1104,Chorrillos_1042
-Barranco_1104,Miraflores_877
-Villa El Salvador_813,Surco_1099
-Villa El Salvador_813,Surco_404
-Villa El Salvador_813,Chorrillos_816
-Villa El Salvador_813,Surco_285
-Villa El Salvador_813,Chorrillos_1041
-Surco_1099,Miraflores_1056
-Surco_1099,Barranco_397
-Miraflores_1407,Barranco_419
-Miraflores_1407,Barranco_292
-Miraflores_1407,Barranco_1454
-Miraflores_1407,Barranco_1229
-Barranco_419,Chorrillos_248
-Barranco_419,Miraflores_1222
-Barranco_219,Surco_803
-Barranco_219,Chorrillos_566
-Villa El Salvador_1105,Surco_930
-Villa El Salvador_1105,Surco_387
-Villa El Salvador_1105,Chorrillos_1499
-Surco_930,Miraflores_720
-Surco_930,Villa El Salvador_851
-Chorrillos_90,Villa El Salvador_135
-Chorrillos_90,Villa El Salvador_60
-Villa El Salvador_135,Surco_1327
-Villa El Salvador_135,Chorrillos_237
-Surco_1167,Barranco_1360
-Barranco_1360,Surco_387
-Barranco_1360,Surco_1263
-Villa El Salvador_891,Surco_1
-Surco_1,Barranco_1411
-Surco_1,Villa El Salvador_1074
-Barranco_1125,Surco_161
-Villa El Salvador_1115,Chorrillos_706
-Chorrillos_706,Barranco_409
-Chorrillos_706,Villa El Salvador_267
-Barranco_717,Chorrillos_743
-Barranco_717,Chorrillos_1010
-Barranco_532,Miraflores_1294
-Barranco_532,Chorrillos_989
-Barranco_532,Miraflores_501
-Miraflores_877,Barranco_1160
-Barranco_1160,Chorrillos_69
-Barranco_1160,Chorrillos_535
-Villa El Salvador_608,Surco_1143
-Villa El Salvador_608,Surco_285
-Miraflores_916,Surco_1327
-Miraflores_916,Barranco_292
-Barranco_1229,Chorrillos_1152
-Barranco_1229,Chorrillos_816
-Chorrillos_620,Barranco_1194
-Chorrillos_206,Barranco_1411
-Chorrillos_206,Villa El Salvador_274
-Barranco_1411,Chorrillos_1079
-Barranco_1411,Surco_996
-Barranco_1411,Miraflores_1324
-Barranco_292,Miraflores_720
-Barranco_292,Chorrillos_434
-Villa El Salvador_1442,Chorrillos_71
-Barranco_1469,Chorrillos_187
-Barranco_1469,Surco_588
-Chorrillos_187,Villa El Salvador_73
-Barranco_471,Miraflores_545
-Villa El Salvador_642,Surco_1385
-Surco_1385,Miraflores_1040
-Barranco_560,Chorrillos_1499
-Barranco_560,Chorrillos_1395
-Villa El Salvador_1057,Surco_1460
-Villa El Salvador_1057,Surco_898
-Villa El Salvador_1057,Chorrillos_34
-Villa El Salvador_572,Chorrillos_578
-Villa El Salvador_572,Surco_1066
-Villa El Salvador_572,Chorrillos_769
-Chorrillos_578,Barranco_784
-Villa El Salvador_1193,Chorrillos_248
-Chorrillos_248,Villa El Salvador_562
-Surco_803,Villa El Salvador_267
-Villa El Salvador_1412,Chorrillos_69
-Villa El Salvador_1412,Chorrillos_1280
-Chorrillos_1079,Barranco_1109
-Barranco_1375,Surco_1443
-Barranco_1375,Surco_924
-Barranco_17,Chorrillos_1067
-Chorrillos_1067,Villa El Salvador_249
-Chorrillos_1067,Villa El Salvador_1393
-Chorrillos_1152,Villa El Salvador_914
-Villa El Salvador_851,Surco_1066
-Miraflores_1301,Barranco_397
-Barranco_397,Chorrillos_237
-Barranco_974,Chorrillos_131
-Barranco_974,Surco_285
-Barranco_1253,Chorrillos_618
-Chorrillos_535,Villa El Salvador_561
-Chorrillos_535,Barranco_1109
-Surco_1092,Barranco_422
-Surco_1092,Barranco_1400
-Barranco_422,Chorrillos_1042
-Barranco_422,Surco_161
-Barranco_422,Surco_636
-Villa El Salvador_147,Surco_45
-Villa El Salvador_147,Chorrillos_584
-Surco_45,Miraflores_1239
-Miraflores_175,Surco_313
-Villa El Salvador_73,Chorrillos_692
-Chorrillos_1042,Villa El Salvador_1439
-Chorrillos_1042,Barranco_774
-Chorrillos_179,Barranco_821
-Miraflores_321,Barranco_527
-Miraflores_321,Barranco_1358
-Barranco_527,Miraflores_808
-Barranco_527,Chorrillos_692
-Barranco_1139,Miraflores_1472
-Villa El Salvador_543,Surco_404
-Chorrillos_1041,Barranco_443
-Chorrillos_1041,Villa El Salvador_861
-Barranco_443,Chorrillos_271
-Chorrillos_1283,Villa El Salvador_854
-Chorrillos_1283,Villa El Salvador_1122
-Barranco_1281,Chorrillos_1369
-Barranco_1281,Chorrillos_1010
-Barranco_1281,Miraflores_242
-Chorrillos_566,Villa El Salvador_1197
-Miraflores_44,Barranco_466
-Barranco_466,Chorrillos_1280
-Barranco_466,Surco_924
-Surco_161,Miraflores_1123
-Villa El Salvador_534,Chorrillos_1011
-Chorrillos_1011,Villa El Salvador_1355
-Chorrillos_439,Barranco_774
-Chorrillos_439,Villa El Salvador_872
-Chorrillos_692,Barranco_1109
-Barranco_1109,Miraflores_1031
-Miraflores_431,Surco_1409
-Barranco_1181,Surco_1474
-Surco_814,Barranco_182
-Barranco_182,Surco_323
-Villa El Salvador_257,Chorrillos_794
-Chorrillos_794,Villa El Salvador_1355
-Surco_387,Villa El Salvador_54
-Surco_302,Villa El Salvador_613
-Surco_302,Barranco_465
-Chorrillos_769,Villa El Salvador_613
-Villa El Salvador_486,Chorrillos_319
-Chorrillos_319,Villa El Salvador_484
-Chorrillos_319,Villa El Salvador_665
-Chorrillos_904,Villa El Salvador_140
-Villa El Salvador_946,Surco_684
-Villa El Salvador_946,Surco_441
-Villa El Salvador_946,Chorrillos_940
-Villa El Salvador_946,Chorrillos_204
-Surco_684,Villa El Salvador_639
-Surco_684,Villa El Salvador_1355
-Chorrillos_142,Villa El Salvador_936
-Chorrillos_142,Villa El Salvador_232
-Villa El Salvador_1355,Chorrillos_277
-Villa El Salvador_1355,Chorrillos_687
-Barranco_751,Surco_92
-Surco_924,Barranco_1454
-Surco_922,Barranco_784
-Villa El Salvador_861,Surco_352
-Miraflores_731,Surco_636
-Barranco_326,Chorrillos_146
-Chorrillos_146,Villa El Salvador_479
-Barranco_742,Miraflores_802
-Barranco_241,Surco_1321
-Villa El Salvador_639,Surco_347
-Chorrillos_311,Barranco_488
-Villa El Salvador_562,Chorrillos_989
-Surco_1327,Villa El Salvador_348
-Chorrillos_204,Barranco_1284
-Chorrillos_69,Barranco_952
-Barranco_952,Chorrillos_1369
-Barranco_582,Chorrillos_1418
-Miraflores_1208,Surco_1474
-Barranco_1454,Chorrillos_866
-Miraflores_1080,Barranco_338
-Barranco_338,Miraflores_1374
-Chorrillos_1369,Villa El Salvador_1346
-Villa El Salvador_665,Chorrillos_544
-Chorrillos_940,Barranco_998
-Chorrillos_1395,Villa El Salvador_54
-Barranco_1101,Surco_1263
-Surco_1263,Villa El Salvador_13
-Miraflores_1180,Barranco_1341
-Chorrillos_1010,Villa El Salvador_7
-Villa El Salvador_7,Chorrillos_1415
-Chorrillos_743,Barranco_458
-Miraflores_873,Surco_468
-Miraflores_1051,Barranco_938
-Miraflores_972,Surco_1490
-Miraflores_691,Barranco_1468
+San Isidro_219,San Borja_246
+San Isidro_219,San Borja_571
+San Isidro_1409,San Borja_319
+San Isidro_1409,San Borja_946
+San Isidro_1409,San Borja_661
+San Isidro_1409,San Borja_1314
+San Isidro_1409,Rimac_762
+San Isidro_1409,San Borja_558
+San Isidro_1481,Rimac_1190
+San Isidro_1481,San Borja_1491
+San Isidro_1481,Rimac_361
+San Isidro_1481,Rimac_1394
+Rimac_1142,San Isidro_1367
+Rimac_1142,San Isidro_452
+Rimac_1142,San Isidro_1017
+San Isidro_1367,Rimac_1391
+San Isidro_1367,Rimac_425
+San Isidro_1367,San Borja_926
+San Isidro_1413,San Borja_40
+San Isidro_1413,San Borja_339
+San Borja_40,San Isidro_1041
+San Borja_40,San Isidro_428
+Rimac_475,San Isidro_1159
+Rimac_475,San Isidro_614
+San Isidro_1159,San Borja_331
+San Isidro_1159,Rimac_972
+Rimac_249,San Isidro_383
+Rimac_249,San Isidro_955
+San Isidro_383,Rimac_74
+San Isidro_263,San Borja_875
+San Isidro_263,San Borja_419
+San Borja_875,San Isidro_524
+Rimac_361,San Isidro_279
+San Isidro_279,Rimac_1345
+San Isidro_279,San Borja_817
+Rimac_616,San Isidro_1363
+Rimac_616,San Isidro_141
+Rimac_616,San Isidro_1089
+Rimac_1119,San Isidro_891
+Rimac_1119,San Isidro_138
+Rimac_1119,San Isidro_723
+San Isidro_891,Rimac_572
+Rimac_762,San Isidro_1011
+San Isidro_1011,San Borja_112
+Rimac_321,San Isidro_527
+San Isidro_527,Rimac_365
+San Isidro_527,San Borja_1331
+San Isidro_527,San Borja_615
+San Isidro_184,San Borja_419
+San Isidro_184,Rimac_125
+Rimac_1345,San Isidro_14
+Rimac_1345,San Isidro_1378
+San Isidro_614,Rimac_153
+Rimac_1208,San Isidro_434
+San Isidro_434,San Borja_407
+San Isidro_434,San Borja_1460
+Rimac_153,San Isidro_1375
+San Borja_1400,San Isidro_525
+San Borja_1400,San Isidro_829
+San Borja_1400,San Isidro_455
+San Isidro_525,San Borja_162
+San Isidro_525,San Borja_1274
+San Isidro_1187,Rimac_572
+San Isidro_1187,San Borja_1324
+San Isidro_1187,Rimac_755
+Rimac_898,San Isidro_1039
+Rimac_898,San Isidro_829
+Rimac_898,San Isidro_888
+San Isidro_1039,Rimac_337
+San Isidro_1039,San Borja_1019
+Rimac_160,San Isidro_829
+Rimac_160,San Isidro_141
+San Borja_661,San Isidro_1299
+San Borja_297,San Isidro_1495
+San Borja_297,San Isidro_1151
+San Isidro_1495,San Borja_37
+San Isidro_1495,San Borja_1408
+Rimac_106,San Isidro_524
+Rimac_106,San Isidro_293
+San Isidro_1489,San Borja_1224
+San Isidro_1489,Rimac_734
+San Isidro_1489,Rimac_1398
+San Isidro_1489,Rimac_906
+San Isidro_1299,Rimac_770
+San Isidro_955,Rimac_1234
+San Borja_913,San Isidro_837
+San Isidro_837,San Borja_819
+San Isidro_837,San Borja_1144
+San Isidro_837,Rimac_1074
+San Isidro_403,Rimac_255
+San Isidro_403,Rimac_585
+Rimac_1249,San Isidro_14
+San Borja_1477,San Isidro_293
+San Borja_1477,San Isidro_431
+San Isidro_293,San Borja_88
+San Isidro_189,San Borja_1048
+San Borja_226,San Isidro_1021
+Rimac_1434,San Isidro_1487
+San Isidro_1487,Rimac_502
+San Borja_709,San Isidro_1161
+San Borja_407,San Isidro_121
+San Borja_280,San Isidro_699
+Rimac_1181,San Isidro_262
+Rimac_1181,San Isidro_1378
+San Isidro_262,San Borja_764
+Rimac_1391,San Isidro_1281
+Rimac_412,San Isidro_49
+Rimac_972,San Isidro_894
+San Isidro_894,Rimac_844
+San Isidro_1006,San Borja_558
+San Isidro_1006,San Borja_752
+San Borja_1274,San Isidro_1017
+Rimac_1234,San Isidro_1342
+Rimac_1234,San Isidro_1243
+Rimac_1234,San Isidro_472
+San Isidro_1342,San Borja_1314
+San Isidro_1132,San Borja_204
+San Borja_815,San Isidro_620
+San Borja_815,San Isidro_1061
+San Isidro_141,Rimac_734
+San Isidro_629,San Borja_1418
+San Borja_1418,San Isidro_1061
+San Borja_1418,San Isidro_138
+San Isidro_36,San Borja_1464
+San Borja_926,San Isidro_431
+San Isidro_431,San Borja_565
+San Isidro_431,San Borja_1419
+San Isidro_1210,Rimac_1074
+Rimac_1074,San Isidro_1083
+San Isidro_1041,San Borja_88
+San Isidro_1306,San Borja_866
+San Isidro_1306,Rimac_329
+San Isidro_1306,San Borja_745
+San Borja_339,San Isidro_472
+San Borja_339,San Isidro_1378
+San Borja_1419,San Isidro_1493
+Rimac_906,San Isidro_1280
+San Isidro_1280,San Borja_1335
+San Isidro_387,San Borja_653
+San Isidro_387,San Borja_853
+San Isidro_387,Rimac_485
+San Borja_20,San Isidro_154
+San Isidro_154,Rimac_1212
+San Isidro_154,Rimac_1137
+Rimac_734,San Isidro_861
+Rimac_485,San Isidro_742
+San Borja_1460,San Isidro_4
+San Isidro_1281,Rimac_1177
+San Isidro_1151,San Borja_1313
+San Isidro_723,Rimac_1093
+San Isidro_861,Rimac_656
+San Isidro_861,Rimac_1315
+San Isidro_1061,San Borja_637
+Rimac_358,San Isidro_935
+San Isidro_935,Rimac_611
+San Isidro_472,Rimac_499
+San Isidro_472,San Borja_1293
+San Isidro_1089,San Borja_959
+Rimac_287,San Isidro_790
+San Isidro_812,San Borja_764
+San Isidro_812,Rimac_117
+Rimac_1429,San Isidro_221
+Rimac_821,San Isidro_444
+Rimac_821,San Isidro_428
+San Isidro_1178,San Borja_595
+San Borja_559,San Isidro_924
+Rimac_771,San Isidro_1106
+San Isidro_1106,San Borja_1290
