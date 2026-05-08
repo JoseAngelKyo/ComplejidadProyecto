@@ -1,5 +1,5 @@
-import pandas as pd
-import networkx as nx
+import pandas as pd 
+import networkx as nx 
 import matplotlib.pyplot as plt
 
 df_intersecciones = pd.read_csv(
@@ -10,9 +10,6 @@ df_conexiones = pd.read_csv(
     "DataSet/conexiones_viales_trafico.csv"
 )
 
-# =========================
-# CREACION DEL GRAFO
-# =========================
 G = nx.from_pandas_edgelist(
     df_conexiones,
     source="origen",
@@ -20,9 +17,6 @@ G = nx.from_pandas_edgelist(
     create_using=nx.Graph()
 )
 
-# =========================
-# ANALISIS DEL GRAFO
-# =========================
 print("\n=========================================")
 print("ANALISIS DEL GRAFO")
 print("=========================================")
@@ -30,9 +24,6 @@ print("=========================================")
 print(f"\nCantidad total de nodos: {G.number_of_nodes()}")
 print(f"Cantidad total de aristas: {G.number_of_edges()}")
 
-# =========================
-# BFS (RECORRIDO EN GRAFOS)
-# =========================
 print("\n=========================================")
 print("BFS (RECORRIDO EN GRAFOS)")
 print("=========================================")
@@ -46,9 +37,6 @@ if len(G.nodes) > 0:
     print(f"Cantidad de nodos recorridos: {len(bfs_resultado)}")
     print(f"Primeros 10 nodos recorridos: {bfs_resultado[:10]}")
 
-# =========================
-# VISUALIZACION DEL GRAFO
-# =========================
 print("\n=========================================")
 print("VISUALIZACION DEL GRAFO")
 print("=========================================")
