@@ -1,5 +1,5 @@
-import pandas as pd 
-import networkx as nx 
+import pandas as pd
+import networkx as nx
 import matplotlib.pyplot as plt
 
 df_intersecciones = pd.read_csv(
