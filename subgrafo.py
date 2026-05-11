@@ -1,3 +1,5 @@
+"""Generación y análisis de subgrafos por zonas urbanas de Lima"""
+
 import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt

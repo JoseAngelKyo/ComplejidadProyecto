@@ -1,3 +1,5 @@
+"""Generación del dataset sintético de intersecciones y conexiones viales urbanas simuladas"""
+
 import csv
 import random
 import os
