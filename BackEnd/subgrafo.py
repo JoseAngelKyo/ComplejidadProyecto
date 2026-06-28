@@ -12,56 +12,96 @@ DESCRIPCION_ZONA = {
 
 
 def construir_subgrafo(zonas: list):
-    nodos = supabase.table("intersecciones").select(
-        "*").in_("zona", zonas).execute().data
+
+    # =========================
+    # NODOS
+    # =========================
+
+    nodos = supabase.table("intersecciones") \
+        .select("*") \
+        .in_("zona", zonas) \
+        .execute().data
 
     nombres_validos = [n["nombre"] for n in nodos]
 
-    edges = supabase.table("conexiones").select("*").execute().data
+    # =========================
+    # ARISTAS
+    # =========================
 
-    edges_filtrados = [
-        e for e in edges
-        if e["origen"] in nombres_validos and e["destino"] in nombres_validos
-    ]
+    conexiones = supabase.table("conexiones") \
+        .select("*") \
+        .execute().data
+
+    conexiones_filtradas = []
+
+    for c in conexiones:
+
+        if c["origen"] in nombres_validos and c["destino"] in nombres_validos:
+            conexiones_filtradas.append(c)
+
+    # =========================
+    # GRAFO
+    # =========================
 
     G = nx.Graph()
 
     for n in nodos:
-        G.add_node(n["nombre"], **n)
 
-    for e in edges_filtrados:
-        G.add_edge(e["origen"], e["destino"],
-                   weight=float(e["distancia_km"]), **e)
+        G.add_node(
+            n["nombre"],
+            **n
+        )
 
-    return G
+    for c in conexiones_filtradas:
 
-
-@router.get("/subgrafo")
-def get_subgrafo(zona: str):
-    zonas_validas = {
-        "norte": ["Lima Norte"],
-        "centro": ["Lima Centro"],
-        "sur": ["Lima Sur"],
-        "todas": ["Lima Norte", "Lima Centro", "Lima Sur"]
-    }
-
-    zonas = zonas_validas.get(zona.lower())
-
-    if not zonas:
-        return {"error": "Zona inválida. Usa: norte, centro, sur, todas"}
-
-    G = construir_subgrafo(zonas)
+        G.add_edge(
+            c["origen"],
+            c["destino"],
+            weight=float(c["distancia_km"])
+        )
 
     grados = dict(G.degree())
+
     nodo_central = None
 
     if grados:
         nodo_central = max(grados, key=grados.get)
 
     return {
-        "zonas": zonas,
-        "nodos": G.number_of_nodes(),
-        "aristas": G.number_of_edges(),
+        "descripcion": [DESCRIPCION_ZONA[z] for z in zonas],
         "nodo_mas_conectado": nodo_central,
-        "descripcion": [DESCRIPCION_ZONA[z] for z in zonas]
+        "total_nodos": G.number_of_nodes(),
+        "total_aristas": G.number_of_edges(),
+
+        # ESTO ES LO IMPORTANTE PARA EL FRONT
+        "nodos": nodos,
+        "conexiones": conexiones_filtradas
     }
+
+
+@router.get("/subgrafo")
+def get_subgrafo(zona: str):
+
+    zonas_validas = {
+
+        "norte": ["Lima Norte"],
+        "centro": ["Lima Centro"],
+        "sur": ["Lima Sur"],
+        "todas": [
+            "Lima Norte",
+            "Lima Centro",
+            "Lima Sur"
+        ]
+    }
+
+    zona = zona.lower()
+
+    if zona not in zonas_validas:
+
+        return {
+            "error": "Zona inválida"
+        }
+
+    return construir_subgrafo(
+        zonas_validas[zona]
+    )
