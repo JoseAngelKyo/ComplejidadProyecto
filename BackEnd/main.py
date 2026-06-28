@@ -1,62 +1,137 @@
-"""Sistema de análisis y visualización de una red vial urbana simulada."""
-
-import pandas as pd
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from supabase_client import supabase
 import networkx as nx
-import matplotlib.pyplot as plt
 
-df_intersecciones = pd.read_csv(
-    "DataSet/intersecciones_viales.csv"
+app = FastAPI(title="Sistema de Tráfico Inteligente - Lima")
+
+# -----------------------------
+# CORS
+# -----------------------------
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
-df_conexiones = pd.read_csv(
-    "DataSet/conexiones_viales_trafico.csv"
-)
+# -----------------------------
+# CONSTRUIR GRAFO DESDE SUPABASE
+# -----------------------------
 
-G = nx.from_pandas_edgelist(
-    df_conexiones,
-    source="origen",
-    target="destino",
-    create_using=nx.Graph()
-)
 
-print("\n=========================================")
-print("ANALISIS DEL GRAFO")
-print("=========================================")
+def construir_grafo():
+    response = supabase.table("conexiones").select("*").execute()
+    conexiones = response.data
 
-print(f"\nCantidad total de nodos: {G.number_of_nodes()}")
-print(f"Cantidad total de aristas: {G.number_of_edges()}")
+    G = nx.Graph()
 
-print("\n=========================================")
-print("BFS (RECORRIDO EN GRAFOS)")
-print("=========================================")
+    for c in conexiones:
+        origen = c["origen"]
+        destino = c["destino"]
 
-if len(G.nodes) > 0:
-    nodo_inicio = list(G.nodes)[0]
+        # peso principal = distancia
+        distancia = float(c["distancia_km"])
 
-    bfs_resultado = list(nx.bfs_tree(G, source=nodo_inicio))
+        G.add_edge(origen, destino, weight=distancia, **c)
 
-    print(f"Nodo inicial BFS: {nodo_inicio}")
-    print(f"Cantidad de nodos recorridos: {len(bfs_resultado)}")
-    print(f"Primeros 10 nodos recorridos: {bfs_resultado[:10]}")
+    return G
 
-print("\n=========================================")
-print("VISUALIZACION DEL GRAFO")
-print("=========================================")
 
-plt.figure(figsize=(14, 10))
+# -----------------------------
+# INTERSECCIONES
+# -----------------------------
+@app.get("/intersecciones")
+def get_intersecciones():
+    response = supabase.table("intersecciones").select("*").execute()
+    return response.data
 
-pos = nx.spring_layout(
-    G,
-    seed=42,
-    k=0.15
-)
 
-nx.draw_networkx_nodes(G, pos, node_size=15)
-nx.draw_networkx_edges(G, pos, alpha=0.3)
+# -----------------------------
+# CONEXIONES
+# -----------------------------
+@app.get("/conexiones")
+def get_conexiones():
+    response = supabase.table("conexiones").select("*").execute()
+    return response.data
 
-plt.title("Red Vial Inteligente - Sistema de Trafico Urbano", fontsize=16)
-plt.axis("off")
-plt.show()
 
-print("\nVisualizacion completada correctamente.")
-print("=========================================")
+# -----------------------------
+# INFO DEL GRAFO
+# -----------------------------
+@app.get("/grafo/info")
+def grafo_info():
+    G = construir_grafo()
+    return {
+        "nodos": G.number_of_nodes(),
+        "aristas": G.number_of_edges()
+    }
+
+
+# -----------------------------
+# BFS (OBLIGATORIO)
+# -----------------------------
+@app.get("/bfs/{inicio}")
+def bfs(inicio: str):
+    G = construir_grafo()
+
+    if inicio not in G:
+        return {"error": "Nodo no existe"}
+
+    recorrido = list(nx.bfs_tree(G, source=inicio))
+
+    return {
+        "inicio": inicio,
+        "recorrido": recorrido
+    }
+
+
+# -----------------------------
+# DIJKSTRA (OBLIGATORIO)
+# -----------------------------
+@app.get("/dijkstra")
+def dijkstra(origen: str, destino: str):
+    G = construir_grafo()
+
+    if origen not in G or destino not in G:
+        return {"error": "Nodo no existe"}
+
+    try:
+        camino = nx.shortest_path(
+            G,
+            source=origen,
+            target=destino,
+            weight="weight"
+        )
+
+        distancia_total = nx.shortest_path_length(
+            G,
+            source=origen,
+            target=destino,
+            weight="weight"
+        )
+
+        return {
+            "origen": origen,
+            "destino": destino,
+            "camino": camino,
+            "distancia_total": distancia_total
+        }
+
+    except nx.NetworkXNoPath:
+        return {"error": "No existe ruta entre nodos"}
+
+
+# -----------------------------
+# KRUSKAL (MST - OBLIGATORIO)
+# -----------------------------
+@app.get("/kruskal")
+def kruskal():
+    G = construir_grafo()
+
+    mst = nx.minimum_spanning_tree(G, weight="weight")
+
+    return {
+        "aristas_mst": list(mst.edges(data=True)),
+        "costo_total": sum(d["weight"] for _, _, d in mst.edges(data=True))
+    }

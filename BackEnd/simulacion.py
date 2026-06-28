@@ -1,31 +1,17 @@
-"""Generación del dataset sintético de intersecciones y conexiones viales urbanas simuladas"""
-
-import csv
+from supabase_client import supabase
 import random
 import os
 
-CARPETA_DATASET = "DataSet"
-
-os.makedirs(CARPETA_DATASET, exist_ok=True)
-
+# -----------------------------
+# CONFIGURACIÓN
+# -----------------------------
 NUM_INTERSECCIONES = 1500
 NUM_CONEXIONES = 1500
 
 DISTRITOS = [
-    "Miraflores",
-    "San Isidro",
-    "Barranco",
-    "Surco",
-    "La Molina",
-    "Ate",
-    "San Borja",
-    "Chorrillos",
-    "Comas",
-    "Los Olivos",
-    "San Miguel",
-    "Callao",
-    "Villa El Salvador",
-    "Rimac",
+    "Miraflores", "San Isidro", "Barranco", "Surco", "La Molina",
+    "Ate", "San Borja", "Chorrillos", "Comas", "Los Olivos",
+    "San Miguel", "Callao", "Villa El Salvador", "Rimac",
     "San Juan de Lurigancho"
 ]
 
@@ -65,222 +51,117 @@ DISTRITOS_CERCANOS = {
     "San Juan de Lurigancho": ["Ate", "Rimac"]
 }
 
-TIPOS_INTERSECCION = [
-    "cruce",
-    "rotonda",
-    "interseccion principal"
-]
+TIPOS_INTERSECCION = ["cruce", "rotonda", "interseccion principal"]
+TIPOS_VIA = ["calle", "avenida", "autopista"]
+PRIORIDADES = ["baja", "media", "alta"]
 
-TIPOS_VIA = [
-    "calle",
-    "avenida",
-    "autopista"
-]
-
-PRIORIDADES = [
-    "baja",
-    "media",
-    "alta"
-]
-
-RUTA_INTERSECCIONES = os.path.join(
-    CARPETA_DATASET,
-    "intersecciones_viales.csv"
-)
-
-RUTA_CONEXIONES = os.path.join(
-    CARPETA_DATASET,
-    "conexiones_viales_trafico.csv"
-)
-
+# -----------------------------
+# DATA TEMPORAL
+# -----------------------------
 intersecciones_generadas = []
 
-with open(
-    RUTA_INTERSECCIONES,
-    mode="w",
-    newline="",
-    encoding="utf-8"
-) as archivo_intersecciones:
+# -----------------------------
+# 1. GENERAR INTERSECCIONES
+# -----------------------------
+print("Generando intersecciones...")
 
-    writer = csv.writer(
-        archivo_intersecciones,
-        delimiter=",",
-        quotechar='"',
-        quoting=csv.QUOTE_ALL
+for i in range(1, NUM_INTERSECCIONES + 1):
+
+    distrito = random.choice(DISTRITOS)
+    nombre = f"{distrito}_{i}"
+    zona = ZONAS[distrito]
+
+    latitud = round(random.uniform(-12.25, -11.85), 6)
+    longitud = round(random.uniform(-77.20, -76.85), 6)
+
+    tipo_interseccion = random.choice(TIPOS_INTERSECCION)
+    semaforo = random.choice(["si", "no"])
+
+    supabase.table("intersecciones").insert({
+        "id_interseccion": i,
+        "nombre": nombre,
+        "distrito": distrito,
+        "zona": zona,
+        "latitud": latitud,
+        "longitud": longitud,
+        "tipo_interseccion": tipo_interseccion,
+        "semaforo": semaforo
+    }).execute()
+
+    intersecciones_generadas.append({
+        "nombre": nombre,
+        "distrito": distrito
+    })
+
+print(f"Intersecciones generadas: {NUM_INTERSECCIONES}")
+
+# -----------------------------
+# 2. GENERAR CONEXIONES
+# -----------------------------
+print("Generando conexiones...")
+
+for _ in range(NUM_CONEXIONES):
+
+    origen = random.choice(intersecciones_generadas)
+    distrito_origen = origen["distrito"]
+
+    distritos_validos = DISTRITOS_CERCANOS[distrito_origen]
+
+    posibles_destinos = [
+        x for x in intersecciones_generadas
+        if x["distrito"] in distritos_validos
+    ]
+
+    destino = random.choice(posibles_destinos)
+
+    while destino["nombre"] == origen["nombre"]:
+        destino = random.choice(posibles_destinos)
+
+    tipo_via = random.choice(TIPOS_VIA)
+
+    if tipo_via == "calle":
+        distancia = random.randint(1, 5)
+        velocidad = random.choice([30, 40])
+        nivel_trafico = random.choice([2, 3, 4])
+
+    elif tipo_via == "avenida":
+        distancia = random.randint(3, 10)
+        velocidad = random.choice([50, 60])
+        nivel_trafico = random.choice([1, 2, 3])
+
+    else:
+        distancia = random.randint(8, 15)
+        velocidad = random.choice([80, 100])
+        nivel_trafico = random.choice([1, 2])
+
+    trafico = (
+        "trafico libre" if nivel_trafico == 1 else
+        "trafico moderado" if nivel_trafico == 2 else
+        "trafico alto" if nivel_trafico == 3 else
+        "trafico extremo"
     )
 
-    writer.writerow([
-        "id_interseccion",
-        "nombre",
-        "distrito",
-        "zona",
-        "latitud",
-        "longitud",
-        "tipo_interseccion",
-        "semaforo"
-    ])
+    tiempo = random.randint(distancia * 2, distancia * 5)
 
-    for i in range(1, NUM_INTERSECCIONES + 1):
+    supabase.table("conexiones").insert({
+        "origen": origen["nombre"],
+        "destino": destino["nombre"],
+        "tipo_via": tipo_via,
+        "distancia_km": distancia,
+        "tiempo_min": tiempo,
+        "nivel_trafico": nivel_trafico,
+        "trafico": trafico,
+        "capacidad": random.choice([40, 60, 100, 150, 250, 500]),
+        "velocidad_max": velocidad,
+        "prioridad_via": random.choice(PRIORIDADES),
+        "bidireccional": random.choice(["si", "no"])
+    }).execute()
 
-        distrito = random.choice(DISTRITOS)
+print("Conexiones generadas:", NUM_CONEXIONES)
 
-        nombre = f"{distrito}_{i}"
-
-        zona = ZONAS[distrito]
-
-        latitud = round(random.uniform(-12.25, -11.85), 6)
-
-        longitud = round(random.uniform(-77.20, -76.85), 6)
-
-        tipo_interseccion = random.choice(TIPOS_INTERSECCION)
-
-        semaforo = random.choice(["si", "no"])
-
-        writer.writerow([
-            i,
-            nombre,
-            distrito,
-            zona,
-            latitud,
-            longitud,
-            tipo_interseccion,
-            semaforo
-        ])
-
-        intersecciones_generadas.append({
-            "nombre": nombre,
-            "distrito": distrito
-        })
-
-with open(
-    RUTA_CONEXIONES,
-    mode="w",
-    newline="",
-    encoding="utf-8"
-) as archivo_conexiones:
-
-    writer = csv.writer(
-        archivo_conexiones,
-        delimiter=",",
-        quotechar='"',
-        quoting=csv.QUOTE_ALL
-    )
-
-    writer.writerow([
-        "origen",
-        "destino",
-        "tipo_via",
-        "distancia_km",
-        "tiempo_min",
-        "nivel_trafico",
-        "trafico",
-        "capacidad",
-        "velocidad_max",
-        "prioridad_via",
-        "bidireccional"
-    ])
-
-    for _ in range(NUM_CONEXIONES):
-
-        origen_data = random.choice(intersecciones_generadas)
-
-        distrito_origen = origen_data["distrito"]
-
-        distritos_validos = DISTRITOS_CERCANOS[distrito_origen]
-
-        posibles_destinos = [
-            x for x in intersecciones_generadas
-            if x["distrito"] in distritos_validos
-        ]
-
-        destino_data = random.choice(posibles_destinos)
-
-        while destino_data["nombre"] == origen_data["nombre"]:
-            destino_data = random.choice(posibles_destinos)
-
-        origen = origen_data["nombre"]
-
-        destino = destino_data["nombre"]
-
-        tipo_via = random.choice(TIPOS_VIA)
-
-        if tipo_via == "calle":
-
-            distancia = random.randint(1, 5)
-
-            velocidad = random.choice([30, 40])
-
-            nivel_trafico = random.choice([2, 3, 4])
-
-        elif tipo_via == "avenida":
-
-            distancia = random.randint(3, 10)
-
-            velocidad = random.choice([50, 60])
-
-            nivel_trafico = random.choice([1, 2, 3])
-
-        else:
-
-            distancia = random.randint(8, 15)
-
-            velocidad = random.choice([80, 100])
-
-            nivel_trafico = random.choice([1, 2])
-
-        if nivel_trafico == 1:
-            trafico = "trafico libre"
-
-        elif nivel_trafico == 2:
-            trafico = "trafico moderado"
-
-        elif nivel_trafico == 3:
-            trafico = "trafico alto"
-
-        else:
-            trafico = "trafico extremo"
-
-        tiempo = random.randint(
-            distancia * 2,
-            distancia * 5
-        )
-
-        capacidad = random.choice([
-            40,
-            60,
-            100,
-            150,
-            250,
-            500
-        ])
-
-        prioridad = random.choice(PRIORIDADES)
-
-        bidireccional = random.choice(["si", "no"])
-
-        writer.writerow([
-            origen,
-            destino,
-            tipo_via,
-            distancia,
-            tiempo,
-            nivel_trafico,
-            trafico,
-            capacidad,
-            velocidad,
-            prioridad,
-            bidireccional
-        ])
-
+# -----------------------------
+# FIN
+# -----------------------------
 print("\n=========================================")
-print("SIMULACION URBANA GENERADA")
+print("SIMULACION URBANA COMPLETADA EN SUPABASE")
 print("=========================================")
-
-print(f"\nIntersecciones creadas: {NUM_INTERSECCIONES}")
-print(f"Conexiones creadas: {NUM_CONEXIONES}")
-
-print("\nArchivos generados correctamente.")
-print(f"\n{RUTA_INTERSECCIONES}")
-print(f"{RUTA_CONEXIONES}")
-
-print("\n=========================================")
