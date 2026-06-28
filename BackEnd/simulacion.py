@@ -172,6 +172,7 @@ with open(
         "tipo_via",
         "distancia_km",
         "tiempo_min",
+        "nivel_trafico",
         "trafico",
         "capacidad",
         "velocidad_max",
@@ -204,30 +205,40 @@ with open(
         tipo_via = random.choice(TIPOS_VIA)
 
         if tipo_via == "calle":
+
             distancia = random.randint(1, 5)
-            velocidad = random.choice(["30 km/h", "40 km/h"])
-            trafico = random.choice([
-                "trafico moderado",
-                "trafico alto",
-                "trafico extremo"
-            ])
+
+            velocidad = random.choice([30, 40])
+
+            nivel_trafico = random.choice([2, 3, 4])
 
         elif tipo_via == "avenida":
+
             distancia = random.randint(3, 10)
-            velocidad = random.choice(["50 km/h", "60 km/h"])
-            trafico = random.choice([
-                "trafico libre",
-                "trafico moderado",
-                "trafico alto"
-            ])
+
+            velocidad = random.choice([50, 60])
+
+            nivel_trafico = random.choice([1, 2, 3])
 
         else:
+
             distancia = random.randint(8, 15)
-            velocidad = random.choice(["80 km/h", "100 km/h"])
-            trafico = random.choice([
-                "trafico libre",
-                "trafico moderado"
-            ])
+
+            velocidad = random.choice([80, 100])
+
+            nivel_trafico = random.choice([1, 2])
+
+        if nivel_trafico == 1:
+            trafico = "trafico libre"
+
+        elif nivel_trafico == 2:
+            trafico = "trafico moderado"
+
+        elif nivel_trafico == 3:
+            trafico = "trafico alto"
+
+        else:
+            trafico = "trafico extremo"
 
         tiempo = random.randint(
             distancia * 2,
@@ -235,12 +246,12 @@ with open(
         )
 
         capacidad = random.choice([
-            "40 vehiculos",
-            "60 vehiculos",
-            "100 vehiculos",
-            "150 vehiculos",
-            "250 vehiculos",
-            "500 vehiculos"
+            40,
+            60,
+            100,
+            150,
+            250,
+            500
         ])
 
         prioridad = random.choice(PRIORIDADES)
@@ -251,8 +262,9 @@ with open(
             origen,
             destino,
             tipo_via,
-            f"{distancia} km",
-            f"{tiempo} min",
+            distancia,
+            tiempo,
+            nivel_trafico,
             trafico,
             capacidad,
             velocidad,

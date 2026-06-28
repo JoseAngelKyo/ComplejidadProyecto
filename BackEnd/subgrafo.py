@@ -22,7 +22,6 @@ print("1. Lima Norte")
 print("2. Lima Centro")
 print("3. Lima Sur")
 print("4. Todas")
-
 opcion = input("\nOpción: ")
 
 zonas_map = {
