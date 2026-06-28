@@ -1,85 +1,77 @@
-"""Generación y análisis de subgrafos por zonas urbanas de Lima"""
-
-import pandas as pd
+from fastapi import APIRouter
+from supabase_client import supabase
 import networkx as nx
-import matplotlib.pyplot as plt
-import os
 
+router = APIRouter()
 
-CARPETA_DATASET = "DataSet"
-
-df_nodos = pd.read_csv(os.path.join(
-    CARPETA_DATASET, "intersecciones_viales.csv"))
-
-df_edges = pd.read_csv(os.path.join(
-    CARPETA_DATASET, "conexiones_viales_trafico.csv"))
-
-print("\n===================================")
-print("        ANALISIS DE SUBGRAFOS      ")
-print("===================================")
-
-print("1. Lima Norte")
-print("2. Lima Centro")
-print("3. Lima Sur")
-print("4. Todas")
-opcion = input("\nOpción: ")
-
-zonas_map = {
-    "1": ["Lima Norte"],
-    "2": ["Lima Centro"],
-    "3": ["Lima Sur"],
-    "4": ["Lima Norte", "Lima Centro", "Lima Sur"]
-}
-
-zonas_seleccionadas = zonas_map.get(opcion, ["Lima Centro"])
-
-descripcion_zona = {
+# -----------------------------
+# DESCRIPCIÓN DE ZONAS
+# -----------------------------
+DESCRIPCION_ZONA = {
     "Lima Norte": "Zona de expansión urbana con alta conectividad residencial e industrial.",
     "Lima Centro": "Zona con mayor densidad de intersecciones y flujo vehicular intenso.",
     "Lima Sur": "Zona residencial-comercial con flujo medio de tráfico."
 }
 
-print("\n===================================")
-print("DESCRIPCIÓN DEL SUBGRAFO")
-print("===================================")
+# -----------------------------
+# CONSTRUIR SUBGRAFO DESDE SUPABASE
+# -----------------------------
 
-for zona in zonas_seleccionadas:
-    print(f"- {zona}: {descripcion_zona[zona]}")
 
-df_nodos_filtrados = df_nodos[df_nodos["zona"].isin(zonas_seleccionadas)]
-nodos_validos = df_nodos_filtrados["nombre"].tolist()
+def construir_subgrafo(zonas: list):
+    nodos = supabase.table("intersecciones").select(
+        "*").in_("zona", zonas).execute().data
 
-df_edges_filtrados = df_edges[
-    df_edges["origen"].isin(nodos_validos) &
-    df_edges["destino"].isin(nodos_validos)
-]
+    nombres_validos = [n["nombre"] for n in nodos]
 
-G = nx.from_pandas_edgelist(
-    df_edges_filtrados,
-    source="origen",
-    target="destino",
-    create_using=nx.Graph()
-)
+    edges = supabase.table("conexiones").select("*").execute().data
 
-print("\n===================================")
-print("ANÁLISIS DEL SUBGRAFO")
-print("===================================")
+    edges_filtrados = [
+        e for e in edges
+        if e["origen"] in nombres_validos and e["destino"] in nombres_validos
+    ]
 
-print(f"Nodos: {G.number_of_nodes()}")
-print(f"Aristas: {G.number_of_edges()}")
+    G = nx.Graph()
 
-if len(G.nodes) > 0:
+    for n in nodos:
+        G.add_node(n["nombre"], **n)
+
+    for e in edges_filtrados:
+        G.add_edge(e["origen"], e["destino"],
+                   weight=float(e["distancia_km"]), **e)
+
+    return G
+
+
+# -----------------------------
+# API: SUBGRAFO POR ZONA
+# -----------------------------
+@router.get("/subgrafo")
+def get_subgrafo(zona: str):
+    zonas_validas = {
+        "norte": ["Lima Norte"],
+        "centro": ["Lima Centro"],
+        "sur": ["Lima Sur"],
+        "todas": ["Lima Norte", "Lima Centro", "Lima Sur"]
+    }
+
+    zonas = zonas_validas.get(zona.lower())
+
+    if not zonas:
+        return {"error": "Zona inválida. Usa: norte, centro, sur, todas"}
+
+    G = construir_subgrafo(zonas)
+
     grados = dict(G.degree())
-    nodo_central = max(grados, key=grados.get)
-    print(
-        f"Nodo más conectado: {nodo_central} ({grados[nodo_central]} conexiones)")
+    nodo_central = None
 
-plt.figure(figsize=(10, 7))
-pos = nx.spring_layout(G, seed=42)
+    if grados:
+        nodo_central = max(grados, key=grados.get)
 
-nx.draw_networkx_nodes(G, pos, node_size=30, node_color="skyblue")
-nx.draw_networkx_edges(G, pos, alpha=0.4)
-
-plt.title(f"Subgrafo Vial - {', '.join(zonas_seleccionadas)}")
-plt.axis("off")
-plt.show()
+    return {
+        "zonas": zonas,
+        "nodos": G.number_of_nodes(),
+        "aristas": G.number_of_edges(),
+        "nodo_mas_conectado": nodo_central,
+        "descripcion": [DESCRIPCION_ZONA[z] for z in zonas]
+    }

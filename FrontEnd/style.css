@@ -1,0 +1,399 @@
+/* ========================= */
+/* RESET */
+/* ========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #eef2f7;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ========================= */
+/* SIDEBAR */
+/* ========================= */
+
+.sidebar {
+
+    width: 340px;
+
+    background: #1f2937;
+
+    color: white;
+
+    padding: 25px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+    box-shadow: 5px 0 20px rgba(0, 0, 0, .25);
+
+    z-index: 999;
+
+}
+
+.sidebar h1 {
+
+    font-size: 28px;
+
+    color: #38bdf8;
+
+}
+
+.subtitulo {
+
+    color: #cbd5e1;
+
+    font-size: 14px;
+
+    line-height: 22px;
+
+}
+
+.estado {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-weight: bold;
+
+}
+
+.online {
+
+    width: 12px;
+
+    height: 12px;
+
+    background: #00ff66;
+
+    border-radius: 50%;
+
+    box-shadow: 0 0 12px #00ff66;
+
+}
+
+.sidebar hr {
+
+    border: none;
+
+    border-top: 1px solid #374151;
+
+}
+
+.sidebar h3 {
+
+    color: #ffffff;
+
+    margin-top: 5px;
+
+}
+
+/* ========================= */
+/* INPUTS */
+/* ========================= */
+
+select {
+
+    width: 100%;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    border: none;
+
+    background: white;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+}
+
+/* ========================= */
+/* BOTONES */
+/* ========================= */
+
+.botones {
+
+    display: grid;
+
+    gap: 12px;
+
+}
+
+button {
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .30s;
+
+}
+
+#btnBFS {
+
+    background: #3b82f6;
+
+    color: white;
+
+}
+
+#btnDijkstra {
+
+    background: #10b981;
+
+    color: white;
+
+}
+
+#btnKruskal {
+
+    background: #f59e0b;
+
+    color: white;
+
+}
+
+button:hover {
+
+    transform: translateY(-2px);
+
+    opacity: .90;
+
+}
+
+/* ========================= */
+/* PANEL RESULTADOS */
+/* ========================= */
+
+.panelResultados {
+
+    margin-top: 10px;
+
+    background: #273548;
+
+    padding: 18px;
+
+    border-radius: 12px;
+
+}
+
+.panelResultados h2 {
+
+    margin-bottom: 15px;
+
+}
+
+.panelResultados p {
+
+    margin: 10px 0;
+
+    color: #d1d5db;
+
+}
+
+/* ========================= */
+/* MAIN */
+/* ========================= */
+
+main {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    height: 100vh;
+
+}
+
+/* ========================= */
+/* CARDS */
+/* ========================= */
+
+.cards {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+
+    padding: 20px;
+
+    background: #eef2f7;
+
+}
+
+.card {
+
+    background: white;
+
+    border-radius: 15px;
+
+    padding: 22px;
+
+    text-align: center;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+
+    transition: .25s;
+
+}
+
+.card:hover {
+
+    transform: translateY(-5px);
+
+}
+
+.card h2 {
+
+    color: #2563eb;
+
+    font-size: 32px;
+
+}
+
+.card p {
+
+    margin-top: 8px;
+
+    color: #6b7280;
+
+}
+
+/* ========================= */
+/* MAPA */
+/* ========================= */
+
+#mapa {
+
+    flex: 1;
+
+    margin: 20px;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, .15);
+
+}
+
+/* ========================= */
+/* LEAFLET */
+/* ========================= */
+
+.leaflet-container {
+
+    width: 100%;
+
+    height: 100%;
+
+}
+
+/* ========================= */
+/* POPUPS */
+/* ========================= */
+
+.leaflet-popup-content {
+
+    font-size: 14px;
+
+}
+
+/* ========================= */
+/* SCROLL */
+/* ========================= */
+
+::-webkit-scrollbar {
+
+    width: 8px;
+
+}
+
+::-webkit-scrollbar-thumb {
+
+    background: #9ca3af;
+
+    border-radius: 20px;
+
+}
+
+/* ========================= */
+/* RESPONSIVE */
+/* ========================= */
+
+@media(max-width:1000px) {
+
+    .cards {
+
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+    .sidebar {
+
+        width: 290px;
+
+    }
+
+}
+
+@media(max-width:700px) {
+
+    body {
+
+        flex-direction: column;
+
+    }
+
+    .sidebar {
+
+        width: 100%;
+
+        height: auto;
+
+    }
+
+    .cards {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    #mapa {
+
+        margin: 10px;
+
+        height: 500px;
+
+    }
+
+}

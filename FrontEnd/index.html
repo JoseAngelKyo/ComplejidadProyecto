@@ -1,29 +1,237 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
-    <title>Sistema de Tráfico</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lima Smart Urban System</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
 </head>
 
 <body>
 
-    <h1>Sistema de Tráfico Inteligente</h1>
+    <!-- ========================= -->
+    <!-- SIDEBAR -->
+    <!-- ========================= -->
 
-    <button onclick="cargarIntersecciones()">
-        Cargar Intersecciones
-    </button>
+    <aside class="sidebar">
 
-    <button onclick="cargarConexiones()">
-        Cargar Conexiones
-    </button>
+        <h1>Lima Smart Urban System</h1>
 
-    <button onclick="verGrafo()">
-        Ver Info del Grafo
-    </button>
+        <p class="subtitulo">
+            Sistema Inteligente de Gestión del Tráfico Urbano
+        </p>
 
-    <pre id="output"></pre>
+        <div class="estado">
 
-    <script src="app.js"></script>
+            <span class="online"></span>
+
+            API Conectada
+
+        </div>
+
+        <hr>
+
+        <h3>Zona Urbana</h3>
+
+        <select id="zona">
+
+            <option value="Todas">Toda Lima</option>
+
+            <option value="Lima Norte">
+                Lima Norte
+            </option>
+
+            <option value="Lima Centro">
+                Lima Centro
+            </option>
+
+            <option value="Lima Sur">
+                Lima Sur
+            </option>
+
+        </select>
+
+        <h3>Nodo Origen</h3>
+
+        <select id="origen">
+
+        </select>
+
+        <h3>Nodo Destino</h3>
+
+        <select id="destino">
+
+        </select>
+
+        <div class="botones">
+
+            <button id="btnBFS">
+                BFS
+            </button>
+
+            <button id="btnDijkstra">
+                Dijkstra
+            </button>
+
+            <button id="btnKruskal">
+                Kruskal
+            </button>
+
+        </div>
+
+        <hr>
+
+        <div class="panelResultados">
+
+            <h2>Resultado</h2>
+
+            <p>
+
+                <strong>Algoritmo:</strong>
+
+                <span id="algoritmo">
+                    -
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Distancia:</strong>
+
+                <span id="distancia">
+                    -
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Tiempo:</strong>
+
+                <span id="tiempo">
+                    -
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Intersecciones:</strong>
+
+                <span id="intersecciones">
+                    -
+                </span>
+
+            </p>
+
+        </div>
+
+    </aside>
+
+    <!-- ========================= -->
+    <!-- CONTENIDO -->
+    <!-- ========================= -->
+
+    <main>
+
+        <!-- Tarjetas -->
+
+        <section class="cards">
+
+            <div class="card">
+
+                <h2 id="totalIntersecciones">
+
+                    0
+
+                </h2>
+
+                <p>
+
+                    Intersecciones
+
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h2 id="totalConexiones">
+
+                    0
+
+                </h2>
+
+                <p>
+
+                    Conexiones
+
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h2>
+
+                    3
+
+                </h2>
+
+                <p>
+
+                    Zonas Urbanas
+
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h2>
+
+                    Online
+
+                </h2>
+
+                <p>
+
+                    Estado API
+
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- MAPA -->
+
+        <section id="mapa">
+
+        </section>
+
+    </main>
+
+    <!-- Leaflet -->
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+    <!-- JS -->
+
+    <script src="mapa.js"></script>
+
+    <script src="script.js"></script>
 
 </body>
 
