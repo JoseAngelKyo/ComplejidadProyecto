@@ -1,25 +1,63 @@
 const API = "http://127.0.0.1:8000";
 
+// =========================
+// ESTADO GLOBAL
+// =========================
+
+let interseccionesGlobal = [];
+let conexionesGlobal = [];
+
+// =========================
+// CARGAR INTERSECCIONES
+// =========================
+
 async function cargarIntersecciones() {
     const res = await fetch(`${API}/intersecciones`);
-    const data = await res.json();
+    interseccionesGlobal = await res.json();
 
-    document.getElementById("output").innerText =
-        JSON.stringify(data.slice(0, 10), null, 2);
+    document.getElementById("totalIntersecciones").innerText =
+        interseccionesGlobal.length;
+
+    if (typeof llenarSelects === "function") {
+        llenarSelects(interseccionesGlobal);
+    }
+
+    if (typeof pintarMapa === "function") {
+        pintarMapa(interseccionesGlobal);
+    }
 }
+
+// =========================
+// CARGAR CONEXIONES
+// =========================
 
 async function cargarConexiones() {
     const res = await fetch(`${API}/conexiones`);
-    const data = await res.json();
+    conexionesGlobal = await res.json();
 
-    document.getElementById("output").innerText =
-        JSON.stringify(data.slice(0, 10), null, 2);
+    document.getElementById("totalConexiones").innerText =
+        conexionesGlobal.length;
 }
 
-async function verGrafo() {
+// =========================
+// INFO GRAFO
+// =========================
+
+async function cargarInfoGrafo() {
     const res = await fetch(`${API}/grafo/info`);
     const data = await res.json();
 
-    document.getElementById("output").innerText =
-        JSON.stringify(data, null, 2);
+    console.log("INFO GRAFO:", data);
 }
+
+// =========================
+// INICIO
+// =========================
+
+async function initApp() {
+    await cargarIntersecciones();
+    await cargarConexiones();
+    await cargarInfoGrafo();
+}
+
+initApp();

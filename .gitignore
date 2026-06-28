@@ -1,0 +1,45 @@
+### PYTHON --
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+### ENV --
+.env
+*.env
+
+### VIRTUAL ENV --
+venv/
+env/
+.venv/
+
+### DATA --
+DataSet/
+*.csv
+*.xlsx
+*.json
+
+### IDE --
+.vscode/
+.idea/
+
+### SYSTEM --
+.DS_Store
+Thumbs.db
+
+### LOGS --
+*.log
+
+### TEST / CACHE --
+.pytest_cache/
+coverage/
+*.tmp
+*.bak
+
+### NODE (por si acaso frontend) --
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+### BACKUPS --
+*~

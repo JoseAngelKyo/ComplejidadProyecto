@@ -1,144 +1,190 @@
-// =========================
-// MAPA BASE LEAFLET
-// =========================
+const API = "http://127.0.0.1:8000";
 
-const map = L.map('mapa').setView([-12.05, -77.05], 12);
+// =========================
+// MAPA
+// =========================
+const map = L.map("mapa").setView([-12.05, -77.05], 12);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: 'Lima Smart Urban System'
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "Lima Smart System"
 }).addTo(map);
 
 // =========================
-// VARIABLES GLOBALES
+// ESTADO GLOBAL
 // =========================
-
-let intersecciones = [];
+let nodos = [];
+let conexiones = [];
 let markers = [];
-
-// Colores por zona
-const colores = {
-    "Lima Norte": "#3b82f6",
-    "Lima Centro": "#10b981",
-    "Lima Sur": "#f59e0b",
-    "Lima Este": "#a855f7",
-    "Lima Oeste": "#ef4444"
-};
+let lines = [];
 
 // =========================
-// CARGAR DATOS DESDE BACKEND
+// NORMALIZAR TEXTO (CLAVE FIX)
 // =========================
+function norm(t) {
+    return (t || "").trim().toLowerCase();
+}
 
-async function cargarIntersecciones() {
+// =========================
+// BUSCAR NODO (FIX DEFINITIVO)
+// =========================
+function getNodo(nombre) {
+    return nodos.find(n => norm(n.nombre) === norm(nombre));
+}
 
-    const res = await fetch("http://127.0.0.1:8000/intersecciones");
-    intersecciones = await res.json();
+// =========================
+// LIMPIAR LINEAS
+// =========================
+function limpiarLineas() {
+    lines.forEach(l => map.removeLayer(l));
+    lines = [];
+}
 
-    document.getElementById("totalIntersecciones").innerText = intersecciones.length;
+// =========================
+// CARGAR NODOS
+// =========================
+async function cargarNodos() {
 
-    pintarMapa();
+    const res = await fetch(`${API}/intersecciones`);
+    nodos = await res.json();
+
+    document.getElementById("intersecciones").innerText = nodos.length;
+
+    // markers
+    nodos.forEach(n => {
+        const m = L.circleMarker([n.latitud, n.longitud], {
+            radius: 6,
+            color: "#38bdf8",
+            fillColor: "#38bdf8",
+            fillOpacity: 0.8
+        }).addTo(map);
+
+        markers.push(m);
+    });
+
     llenarSelects();
 }
 
 // =========================
-// PINTAR MAPA
+// CARGAR CONEXIONES
 // =========================
+async function cargarConexiones() {
 
-function pintarMapa() {
+    const res = await fetch(`${API}/conexiones`);
+    conexiones = await res.json();
 
-    // limpiar markers anteriores
-    markers.forEach(m => map.removeLayer(m));
-    markers = [];
+    dibujarGrafoBase();
+}
 
-    intersecciones.forEach(nodo => {
+// =========================
+// GRAFO BASE
+// =========================
+function dibujarGrafoBase() {
 
-        const color = colores[nodo.zona] || "#64748b";
+    limpiarLineas();
 
-        const marker = L.circleMarker(
-            [nodo.latitud, nodo.longitud],
-            {
-                radius: 6,
-                color: color,
-                fillColor: color,
-                fillOpacity: 0.8,
-                weight: 2
-            }
-        ).addTo(map);
+    conexiones.forEach(c => {
 
-        marker.bindPopup(`
-            <b>${nodo.nombre}</b><br>
-            Zona: ${nodo.zona}<br>
-            Distrito: ${nodo.distrito}<br>
-            Semáforo: ${nodo.semaforo}
-        `);
+        const a = getNodo(c.origen);
+        const b = getNodo(c.destino);
 
-        markers.push(marker);
+        if (!a || !b) return;
+
+        const line = L.polyline([
+            [a.latitud, a.longitud],
+            [b.latitud, b.longitud]
+        ], {
+            color: "#334155",
+            weight: 2,
+            opacity: 0.5
+        }).addTo(map);
+
+        lines.push(line);
     });
 }
 
 // =========================
-// LLENAR SELECTS
+// DIBUJAR RUTA
 // =========================
+function dibujarRuta(lista, color) {
 
+    limpiarLineas();
+
+    for (let i = 0; i < lista.length - 1; i++) {
+
+        const a = getNodo(lista[i]);
+        const b = getNodo(lista[i + 1]);
+
+        if (!a || !b) continue;
+
+        const line = L.polyline([
+            [a.latitud, a.longitud],
+            [b.latitud, b.longitud]
+        ], {
+            color,
+            weight: 5,
+            opacity: 0.9
+        }).addTo(map);
+
+        lines.push(line);
+    }
+}
+
+// =========================
+// SELECTS
+// =========================
 function llenarSelects() {
 
-    const origen = document.getElementById("origen");
-    const destino = document.getElementById("destino");
+    const o = document.getElementById("origen");
+    const d = document.getElementById("destino");
 
-    origen.innerHTML = "";
-    destino.innerHTML = "";
+    o.innerHTML = "";
+    d.innerHTML = "";
 
-    intersecciones.forEach(nodo => {
-
-        const option1 = document.createElement("option");
-        option1.value = nodo.nombre;
-        option1.textContent = nodo.nombre;
-
-        const option2 = option1.cloneNode(true);
-
-        origen.appendChild(option1);
-        destino.appendChild(option2);
+    nodos.forEach(n => {
+        o.innerHTML += `<option value="${n.nombre}">${n.nombre}</option>`;
+        d.innerHTML += `<option value="${n.nombre}">${n.nombre}</option>`;
     });
 }
 
 // =========================
 // BFS
 // =========================
-
 document.getElementById("btnBFS").addEventListener("click", async () => {
 
     const inicio = document.getElementById("origen").value;
 
-    const res = await fetch(`http://127.0.0.1:8000/bfs/${inicio}`);
+    const res = await fetch(`${API}/bfs/${inicio}`);
     const data = await res.json();
 
     document.getElementById("algoritmo").innerText = "BFS";
     document.getElementById("intersecciones").innerText = data.recorrido.length;
+
+    dibujarRuta(data.recorrido, "#3b82f6");
 });
 
 // =========================
 // DIJKSTRA
 // =========================
-
 document.getElementById("btnDijkstra").addEventListener("click", async () => {
 
-    const origen = document.getElementById("origen").value;
-    const destino = document.getElementById("destino").value;
+    const o = document.getElementById("origen").value;
+    const d = document.getElementById("destino").value;
 
-    const res = await fetch(`http://127.0.0.1:8000/dijkstra?origen=${origen}&destino=${destino}`);
+    const res = await fetch(`${API}/dijkstra?origen=${o}&destino=${d}`);
     const data = await res.json();
 
     document.getElementById("algoritmo").innerText = "Dijkstra";
-    document.getElementById("distancia").innerText = data.distancia_total + " km";
-    document.getElementById("intersecciones").innerText = data.camino.length;
+    document.getElementById("distancia").innerText = data.distancia + " km";
+
+    dibujarRuta(data.camino, "#10b981");
 });
 
 // =========================
 // KRUSKAL
 // =========================
-
 document.getElementById("btnKruskal").addEventListener("click", async () => {
 
-    const res = await fetch("http://127.0.0.1:8000/kruskal");
+    const res = await fetch(`${API}/kruskal`);
     const data = await res.json();
 
     document.getElementById("algoritmo").innerText = "Kruskal";
@@ -146,7 +192,11 @@ document.getElementById("btnKruskal").addEventListener("click", async () => {
 });
 
 // =========================
-// INICIAR
+// INIT SEGURO (CLAVE)
 // =========================
+async function init() {
+    await cargarNodos();
+    await cargarConexiones();
+}
 
-cargarIntersecciones();
+init();

@@ -2,235 +2,114 @@
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Lima Smart Urban System</title>
 
-    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
-
-    <!-- Leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 
 <body>
 
-    <!-- ========================= -->
-    <!-- SIDEBAR -->
-    <!-- ========================= -->
+    <!-- ===================== -->
+    <!-- TOP BAR -->
+    <!-- ===================== -->
+    <header class="topbar">
 
+        <div class="logo">
+            🚦 Lima Smart Traffic System
+        </div>
+
+        <div class="status">
+            <span class="dot"></span>
+            API Online
+        </div>
+
+    </header>
+
+    <!-- ===================== -->
+    <!-- SIDEBAR CONTROL -->
+    <!-- ===================== -->
     <aside class="sidebar">
 
-        <h1>Lima Smart Urban System</h1>
+        <h2>🧭 Panel de Control</h2>
 
         <p class="subtitulo">
-            Sistema Inteligente de Gestión del Tráfico Urbano
+            Selecciona nodos y ejecuta algoritmos en tiempo real
         </p>
 
-        <div class="estado">
-
-            <span class="online"></span>
-
-            API Conectada
-
+        <!-- BUSCADOR -->
+        <div class="searchBox">
+            <input type="text" id="buscarNodo" placeholder="🔍 Buscar nodo...">
         </div>
 
-        <hr>
+        <!-- ORIGEN -->
+        <label>📍 Nodo Origen</label>
+        <select id="origen"></select>
 
-        <h3>Zona Urbana</h3>
+        <!-- DESTINO -->
+        <label>🎯 Nodo Destino</label>
+        <select id="destino"></select>
 
+        <!-- ZONA -->
+        <label>🌆 Zona Urbana</label>
         <select id="zona">
-
-            <option value="Todas">Toda Lima</option>
-
-            <option value="Lima Norte">
-                Lima Norte
-            </option>
-
-            <option value="Lima Centro">
-                Lima Centro
-            </option>
-
-            <option value="Lima Sur">
-                Lima Sur
-            </option>
-
+            <option value="todas">Toda Lima</option>
+            <option value="Lima Norte">Lima Norte</option>
+            <option value="Lima Centro">Lima Centro</option>
+            <option value="Lima Sur">Lima Sur</option>
         </select>
 
-        <h3>Nodo Origen</h3>
-
-        <select id="origen">
-
-        </select>
-
-        <h3>Nodo Destino</h3>
-
-        <select id="destino">
-
-        </select>
-
+        <!-- BOTONES -->
         <div class="botones">
 
-            <button id="btnBFS">
-                BFS
-            </button>
-
-            <button id="btnDijkstra">
-                Dijkstra
-            </button>
-
-            <button id="btnKruskal">
-                Kruskal
-            </button>
+            <button id="btnBFS">🌐 BFS</button>
+            <button id="btnDijkstra">🚗 Dijkstra</button>
+            <button id="btnKruskal">🛣 Kruskal</button>
 
         </div>
 
-        <hr>
-
+        <!-- RESULTADOS -->
         <div class="panelResultados">
 
-            <h2>Resultado</h2>
+            <h3>📊 Resultado</h3>
 
-            <p>
-
-                <strong>Algoritmo:</strong>
-
-                <span id="algoritmo">
-                    -
-                </span>
-
-            </p>
-
-            <p>
-
-                <strong>Distancia:</strong>
-
-                <span id="distancia">
-                    -
-                </span>
-
-            </p>
-
-            <p>
-
-                <strong>Tiempo:</strong>
-
-                <span id="tiempo">
-                    -
-                </span>
-
-            </p>
-
-            <p>
-
-                <strong>Intersecciones:</strong>
-
-                <span id="intersecciones">
-                    -
-                </span>
-
-            </p>
+            <p>Algoritmo: <span id="algoritmo">-</span></p>
+            <p>Distancia: <span id="distancia">-</span></p>
+            <p>Intersecciones: <span id="intersecciones">-</span></p>
 
         </div>
 
     </aside>
 
-    <!-- ========================= -->
-    <!-- CONTENIDO -->
-    <!-- ========================= -->
-
+    <!-- ===================== -->
+    <!-- MAPA PRINCIPAL -->
+    <!-- ===================== -->
     <main>
 
-        <!-- Tarjetas -->
+        <section class="mapContainer">
 
-        <section class="cards">
+            <div id="mapa"></div>
 
-            <div class="card">
+            <!-- INFO FLOTANTE -->
+            <div class="infoBox">
 
-                <h2 id="totalIntersecciones">
+                <h3>📍 Nodo Seleccionado</h3>
 
-                    0
+                <p><b>Origen:</b> <span id="infoOrigen">-</span></p>
+                <p><b>Destino:</b> <span id="infoDestino">-</span></p>
 
-                </h2>
-
-                <p>
-
-                    Intersecciones
-
-                </p>
+                <p><b>Zona activa:</b> <span id="infoZona">Lima</span></p>
 
             </div>
-
-            <div class="card">
-
-                <h2 id="totalConexiones">
-
-                    0
-
-                </h2>
-
-                <p>
-
-                    Conexiones
-
-                </p>
-
-            </div>
-
-            <div class="card">
-
-                <h2>
-
-                    3
-
-                </h2>
-
-                <p>
-
-                    Zonas Urbanas
-
-                </p>
-
-            </div>
-
-            <div class="card">
-
-                <h2>
-
-                    Online
-
-                </h2>
-
-                <p>
-
-                    Estado API
-
-                </p>
-
-            </div>
-
-        </section>
-
-        <!-- MAPA -->
-
-        <section id="mapa">
 
         </section>
 
     </main>
 
-    <!-- Leaflet -->
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-    </script>
-
-    <!-- JS -->
-
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="mapa.js"></script>
-
     <script src="script.js"></script>
 
 </body>
