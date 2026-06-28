@@ -12,9 +12,6 @@
 
 <body>
 
-    <!-- ===================== -->
-    <!-- TOP BAR -->
-    <!-- ===================== -->
     <header class="topbar">
 
         <div class="logo">
@@ -28,9 +25,6 @@
 
     </header>
 
-    <!-- ===================== -->
-    <!-- SIDEBAR CONTROL -->
-    <!-- ===================== -->
     <aside class="sidebar">
 
         <h2>🧭 Panel de Control</h2>
@@ -39,20 +33,16 @@
             Selecciona nodos y ejecuta algoritmos en tiempo real
         </p>
 
-        <!-- BUSCADOR -->
         <div class="searchBox">
             <input type="text" id="buscarNodo" placeholder="🔍 Buscar nodo...">
         </div>
 
-        <!-- ORIGEN -->
         <label>📍 Nodo Origen</label>
         <select id="origen"></select>
 
-        <!-- DESTINO -->
         <label>🎯 Nodo Destino</label>
         <select id="destino"></select>
 
-        <!-- ZONA -->
         <label>🌆 Zona Urbana</label>
         <select id="zona">
             <option value="todas">Toda Lima</option>
@@ -61,7 +51,6 @@
             <option value="Lima Sur">Lima Sur</option>
         </select>
 
-        <!-- BOTONES -->
         <div class="botones">
 
             <button id="btnBFS">🌐 BFS</button>
@@ -70,7 +59,6 @@
 
         </div>
 
-        <!-- RESULTADOS -->
         <div class="panelResultados">
 
             <h3>📊 Resultado</h3>
@@ -83,16 +71,12 @@
 
     </aside>
 
-    <!-- ===================== -->
-    <!-- MAPA PRINCIPAL -->
-    <!-- ===================== -->
     <main>
 
         <section class="mapContainer">
 
             <div id="mapa"></div>
 
-            <!-- INFO FLOTANTE -->
             <div class="infoBox">
 
                 <h3>📍 Nodo Seleccionado</h3>

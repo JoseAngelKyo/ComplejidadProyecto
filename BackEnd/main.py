@@ -6,10 +6,6 @@ import networkx as nx
 
 app = FastAPI(title="Sistema de Tráfico Inteligente - Lima")
 
-# =========================
-# DATOS BASE (FALTANTE)
-# =========================
-
 
 @app.get("/intersecciones")
 def intersecciones():
@@ -31,9 +27,6 @@ def home():
     }
 
 
-# =========================
-# CORS
-# =========================
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -41,10 +34,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# =========================
-# GRAFO BASE
-# =========================
 
 
 def construir_grafo():
@@ -61,9 +50,6 @@ def construir_grafo():
     return G
 
 
-# =========================
-# BFS
-# =========================
 bfs_router = APIRouter()
 
 
@@ -79,9 +65,6 @@ def bfs(inicio: str):
     return {"inicio": inicio, "recorrido": recorrido}
 
 
-# =========================
-# DIJKSTRA
-# =========================
 dijkstra_router = APIRouter()
 
 
@@ -105,9 +88,6 @@ def dijkstra(origen: str, destino: str):
         return {"error": "No hay ruta"}
 
 
-# =========================
-# KRUSKAL
-# =========================
 kruskal_router = APIRouter()
 
 
@@ -122,9 +102,6 @@ def kruskal():
     }
 
 
-# =========================
-# FUERZA BRUTA (simple)
-# =========================
 @app.get("/fuerza/{inicio}/{fin}")
 def fuerza_bruta(inicio: str, fin: str):
     G = construir_grafo()
@@ -142,9 +119,6 @@ def fuerza_bruta(inicio: str, fin: str):
     }
 
 
-# =========================
-# FLUJO MÁXIMO
-# =========================
 @app.get("/maxflow")
 def maxflow(origen: str, destino: str):
     G = construir_grafo().to_directed()
@@ -157,9 +131,6 @@ def maxflow(origen: str, destino: str):
     return {"flujo_maximo": flujo}
 
 
-# =========================
-# SCC
-# =========================
 @app.get("/scc")
 def scc():
     G = construir_grafo().to_directed()
@@ -170,9 +141,6 @@ def scc():
     }
 
 
-# =========================
-# UFDS (simple)
-# =========================
 @app.get("/ufds")
 def ufds():
     data = supabase.table("conexiones").select("*").execute().data
@@ -207,9 +175,6 @@ def ufds():
     return {"grupos": list(grupos.values())}
 
 
-# =========================
-# DP
-# =========================
 @app.get("/dp")
 def dp(origen: str, destino: str):
     G = construir_grafo()
@@ -233,9 +198,6 @@ def dp(origen: str, destino: str):
     return {"costo_minimo": f(origen)}
 
 
-# =========================
-# REGISTRO DE ROUTERS
-# =========================
 app.include_router(bfs_router)
 app.include_router(dijkstra_router)
 app.include_router(kruskal_router)

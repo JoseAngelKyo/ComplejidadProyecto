@@ -1,15 +1,7 @@
 const API = "http://127.0.0.1:8000";
 
-// =========================
-// ESTADO GLOBAL
-// =========================
-
 let interseccionesGlobal = [];
 let conexionesGlobal = [];
-
-// =========================
-// CARGAR INTERSECCIONES
-// =========================
 
 async function cargarIntersecciones() {
     const res = await fetch(`${API}/intersecciones`);
@@ -27,10 +19,6 @@ async function cargarIntersecciones() {
     }
 }
 
-// =========================
-// CARGAR CONEXIONES
-// =========================
-
 async function cargarConexiones() {
     const res = await fetch(`${API}/conexiones`);
     conexionesGlobal = await res.json();
@@ -39,20 +27,12 @@ async function cargarConexiones() {
         conexionesGlobal.length;
 }
 
-// =========================
-// INFO GRAFO
-// =========================
-
 async function cargarInfoGrafo() {
     const res = await fetch(`${API}/grafo/info`);
     const data = await res.json();
 
     console.log("INFO GRAFO:", data);
 }
-
-// =========================
-// INICIO
-// =========================
 
 async function initApp() {
     await cargarIntersecciones();

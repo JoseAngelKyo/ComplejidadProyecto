@@ -4,18 +4,11 @@ import networkx as nx
 
 router = APIRouter()
 
-# -----------------------------
-# DESCRIPCIÓN DE ZONAS
-# -----------------------------
 DESCRIPCION_ZONA = {
     "Lima Norte": "Zona de expansión urbana con alta conectividad residencial e industrial.",
     "Lima Centro": "Zona con mayor densidad de intersecciones y flujo vehicular intenso.",
     "Lima Sur": "Zona residencial-comercial con flujo medio de tráfico."
 }
-
-# -----------------------------
-# CONSTRUIR SUBGRAFO DESDE SUPABASE
-# -----------------------------
 
 
 def construir_subgrafo(zonas: list):
@@ -43,9 +36,6 @@ def construir_subgrafo(zonas: list):
     return G
 
 
-# -----------------------------
-# API: SUBGRAFO POR ZONA
-# -----------------------------
 @router.get("/subgrafo")
 def get_subgrafo(zona: str):
     zonas_validas = {

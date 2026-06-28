@@ -1,47 +1,29 @@
 const API = "http://127.0.0.1:8000";
 
-// =========================
-// MAPA
-// =========================
 const map = L.map("mapa").setView([-12.05, -77.05], 12);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "Lima Smart System"
 }).addTo(map);
 
-// =========================
-// ESTADO GLOBAL
-// =========================
 let nodos = [];
 let conexiones = [];
 let markers = [];
 let lines = [];
 
-// =========================
-// NORMALIZAR TEXTO (CLAVE FIX)
-// =========================
 function norm(t) {
     return (t || "").trim().toLowerCase();
 }
 
-// =========================
-// BUSCAR NODO (FIX DEFINITIVO)
-// =========================
 function getNodo(nombre) {
     return nodos.find(n => norm(n.nombre) === norm(nombre));
 }
 
-// =========================
-// LIMPIAR LINEAS
-// =========================
 function limpiarLineas() {
     lines.forEach(l => map.removeLayer(l));
     lines = [];
 }
 
-// =========================
-// CARGAR NODOS
-// =========================
 async function cargarNodos() {
 
     const res = await fetch(`${API}/intersecciones`);
@@ -64,9 +46,6 @@ async function cargarNodos() {
     llenarSelects();
 }
 
-// =========================
-// CARGAR CONEXIONES
-// =========================
 async function cargarConexiones() {
 
     const res = await fetch(`${API}/conexiones`);
@@ -75,9 +54,6 @@ async function cargarConexiones() {
     dibujarGrafoBase();
 }
 
-// =========================
-// GRAFO BASE
-// =========================
 function dibujarGrafoBase() {
 
     limpiarLineas();
@@ -102,9 +78,6 @@ function dibujarGrafoBase() {
     });
 }
 
-// =========================
-// DIBUJAR RUTA
-// =========================
 function dibujarRuta(lista, color) {
 
     limpiarLineas();
@@ -129,9 +102,6 @@ function dibujarRuta(lista, color) {
     }
 }
 
-// =========================
-// SELECTS
-// =========================
 function llenarSelects() {
 
     const o = document.getElementById("origen");
@@ -146,9 +116,6 @@ function llenarSelects() {
     });
 }
 
-// =========================
-// BFS
-// =========================
 document.getElementById("btnBFS").addEventListener("click", async () => {
 
     const inicio = document.getElementById("origen").value;
@@ -162,9 +129,6 @@ document.getElementById("btnBFS").addEventListener("click", async () => {
     dibujarRuta(data.recorrido, "#3b82f6");
 });
 
-// =========================
-// DIJKSTRA
-// =========================
 document.getElementById("btnDijkstra").addEventListener("click", async () => {
 
     const o = document.getElementById("origen").value;
@@ -179,9 +143,6 @@ document.getElementById("btnDijkstra").addEventListener("click", async () => {
     dibujarRuta(data.camino, "#10b981");
 });
 
-// =========================
-// KRUSKAL
-// =========================
 document.getElementById("btnKruskal").addEventListener("click", async () => {
 
     const res = await fetch(`${API}/kruskal`);
@@ -191,9 +152,6 @@ document.getElementById("btnKruskal").addEventListener("click", async () => {
     document.getElementById("distancia").innerText = data.costo_total + " km";
 });
 
-// =========================
-// INIT SEGURO (CLAVE)
-// =========================
 async function init() {
     await cargarNodos();
     await cargarConexiones();

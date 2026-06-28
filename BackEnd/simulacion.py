@@ -2,9 +2,6 @@ from supabase_client import supabase
 import random
 import os
 
-# -----------------------------
-# CONFIGURACIÓN
-# -----------------------------
 NUM_INTERSECCIONES = 1500
 NUM_CONEXIONES = 1500
 
@@ -55,14 +52,8 @@ TIPOS_INTERSECCION = ["cruce", "rotonda", "interseccion principal"]
 TIPOS_VIA = ["calle", "avenida", "autopista"]
 PRIORIDADES = ["baja", "media", "alta"]
 
-# -----------------------------
-# DATA TEMPORAL
-# -----------------------------
 intersecciones_generadas = []
 
-# -----------------------------
-# 1. GENERAR INTERSECCIONES
-# -----------------------------
 print("Generando intersecciones...")
 
 for i in range(1, NUM_INTERSECCIONES + 1):
@@ -95,9 +86,6 @@ for i in range(1, NUM_INTERSECCIONES + 1):
 
 print(f"Intersecciones generadas: {NUM_INTERSECCIONES}")
 
-# -----------------------------
-# 2. GENERAR CONEXIONES
-# -----------------------------
 print("Generando conexiones...")
 
 for _ in range(NUM_CONEXIONES):
@@ -159,9 +147,6 @@ for _ in range(NUM_CONEXIONES):
 
 print("Conexiones generadas:", NUM_CONEXIONES)
 
-# -----------------------------
-# FIN
-# -----------------------------
 print("\n=========================================")
 print("SIMULACION URBANA COMPLETADA EN SUPABASE")
 print("=========================================")
